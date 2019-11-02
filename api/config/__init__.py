@@ -16,7 +16,7 @@ def get_secret_key(filepath):
 CONFIG_FILE = 'config/config.ini'
 
 HOST = os.environ.get('HOST', '0.0.0.0')
-PORT = int(os.environ.get('PORT', '5000'))
+PORT = int(os.environ.get('PORT', '8080'))
 ENV = os.environ.get('ENV', 'development')
 DEBUG_MODE = True if ENV in 'development|test' else False
 

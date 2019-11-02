@@ -31,6 +31,6 @@ services:
       - ./tmp/api:/tmp
       - ./api:/api
     ports:
-      - '5000:5000'
+      - '8080:8080'
     depends_on:  
       - db
