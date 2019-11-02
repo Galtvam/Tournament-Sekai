@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    volumes:
+      - ./tmp/database:/var/lib/postgresql/data
+    ports:
+      - '8000:5432'
+  # app:
+  #   container_name: app
+  #   build:
+  #     context: './app'
+  api:
+    container_name: api
+    build: 
+      context: './api'
+    environment:
+        POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+        ENV: $ENV
+    volumes:
+      - ./tmp/api:/tmp
+      - ./api:/api
+    ports:
+      - '5000:5000'
+    depends_on:  
+      - db
