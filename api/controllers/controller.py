@@ -13,6 +13,8 @@ class Controller:
 			parameters = (args, kwargs)
 			route_parameters = rule, options, f, parameters
 			Controller.routes.append(route_parameters)
+			resource_name = rule.strip('/').split('/')[0]
+			f.__name__ = f'{resource_name}_{f.__name__}'
 		return decorator
 
 	@staticmethod
