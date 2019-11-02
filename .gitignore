@@ -22,4 +22,5 @@ __pycache__/
 
 # Application states
 secret_key
+migrations_state
 db_seeds.sql
