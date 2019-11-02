@@ -16,10 +16,14 @@ services:
       - ./tmp/database:/var/lib/postgresql/data
     ports:
       - '8000:5432'
-  # app:
-  #   container_name: app
-  #   build:
-  #     context: './app'
+  webapp:
+    container_name: webapp
+    build:
+      context: './webapp'
+    ports:
+      - '8081:8081'
+    volumes:
+      - ./webapp:/webapp
   api:
     container_name: api
     build: 

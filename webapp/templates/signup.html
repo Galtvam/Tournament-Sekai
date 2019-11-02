@@ -1,0 +1,45 @@
+{% extends "layouts/credentials.html" %}
+{% block credentials_title %}
+<h2 class="mdl-card__title-text">Cadastro</h2>
+{% endblock %}
+{% block credentials_content %}
+<div>
+    Novo na plataforma? Preencha o formulário abaixo para criamos sua conta. 
+    <a href="{{ url_for('home') }}">Já possuo conta</a>
+</div>
+<form id="signupForm" class="credentials-form" action="#">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="login" name="login" data-required="true">
+        <label class="mdl-textfield__label" for="login">Nome de usuário</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="email" id="email" name="email" data-required="true">
+        <label class="mdl-textfield__label" for="email">E-mail</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="name" name="name" data-required="true">
+        <label class="mdl-textfield__label" for="name">Nome</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
+        <input class="mdl-textfield__input" type="date" id="birthday" name="birthday" value="{{today_date}}" data-required="true">
+        <label class="mdl-textfield__label" for="birthday">Data de Nascimento</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" id="password" name="password" data-required="true">
+        <label class="mdl-textfield__label" for="password">Senha</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="password" id="confirmPassword" name="confirm_password" data-required="true">
+            <label class="mdl-textfield__label" for="confirmPassword">Confirmar Senha</label>
+        </div>
+    <div class="mdl-card__actions">
+        <div class="mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-layout-spacer"></div>
+            <button id="signupFormSubmitButton" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-cell--middle">
+                Criar conta
+            </button>
+            <div class="mdl-layout-spacer"></div>
+        </div>
+    </div>
+</form>
+{% endblock %}

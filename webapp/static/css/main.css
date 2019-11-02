@@ -1,0 +1,15 @@
+body {
+    background-color:#EFEFEF;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mdl-typography--display-4 {
+    font-family:"Roboto","Helvetica","Arial",sans-serif;
+    font-size: 9vw;
+    font-weight:300;
+    line-height:1;
+    letter-spacing:-.04em;
+}
