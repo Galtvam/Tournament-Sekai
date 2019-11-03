@@ -20,6 +20,9 @@ application.config['JWT_SECRET_KEY'] = SECRET_KEY
 application.config['JWT_ACCESS_TOKEN_EXPIRES'] = JWT_ACCESS_TOKEN_EXPIRES
 application.config["JSON_SORT_KEYS"] = False
 
+# Confirações do Bcrypt
+flask_bcrypt = Bcrypt(application)
+
 
 # Conectado com o banco de dados
 db_connector = Connector(
@@ -33,8 +36,10 @@ db_connector = Connector(
 Model.set_connector(db_connector)
 
 # Deinição das rotas
+Controller.set_application(application)
 Controller.apply_routes(application)
 Controller.set_jwt_rules(jwt)
+Controller.set_bcrypt(flask_bcrypt)
 
 # Configurações de ambiente
 Environment.set_environment(ENV)

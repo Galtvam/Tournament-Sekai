@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS "user"(
   "login" VARCHAR(20) PRIMARY KEY NOT NULL,
-  "password" VARCHAR(50) NOT NULL,
+  "password" VARCHAR(64) NOT NULL,
   "name" TEXT NOT NULL,
-  email VARCHAR(256) NOT NULL,
+  email VARCHAR(64) NOT NULL UNIQUE,
   birthday DATE NOT NULL,
-  registration_date DATE NOT NULL,
+  registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   country TEXT,
   "state" TEXT,
