@@ -22,7 +22,7 @@ class UsersModel(Model):
         sql = (f'INSERT INTO "{self.table_name}" '
                f'({self.col_login}, {self.col_password}, '
                f'{self.col_name}, {self.col_email}, {self.col_birthday}) '
-                'VALUES (%s, %s, %s, %s, %s)')
+                'VALUES (LOWER(%s), %s, LOWER(%s), %s, %s)')
         result = self.connector.execute_sql(
             sql, (self.login, self.password, self.name, self.email, self.birthday)
         )
@@ -32,12 +32,12 @@ class UsersModel(Model):
                 'email': self.email, 'birthday': self.birthday.strftime('%d/%m/%Y')}
 
     def find_by_login(login):
-        sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE {UsersModel.col_login}=''%s'
+        sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE {UsersModel.col_login}=''LOWER(%s)'
         result = UsersModel.connector.execute_sql(sql, (login,))
         return UsersModel.instantiate_rows(result)
 
     def find_by_email(email):
-        sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE {UsersModel.col_email}=''%s'
+        sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE {UsersModel.col_email}=''LOWER(%s)'
         result = UsersModel.connector.execute_sql(sql, (email,))
         return UsersModel.instantiate_rows(result)
     
