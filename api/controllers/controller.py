@@ -53,7 +53,7 @@ class Controller:
 			try:
 				conditions = [
 					'Content-Type' in request.headers,
-					request.headers['Content-Type'] == 'application/json',
+					'application/json' in request.headers['Content-Type'],
 					json.loads(request.data) is not None
 				]
 				if not all(conditions):

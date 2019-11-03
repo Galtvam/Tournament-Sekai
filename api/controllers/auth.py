@@ -13,6 +13,7 @@ class AuthController(Controller):
     birthday_param = 'birthday', UsersModel.Validation.birthday
 
     @Controller.route('/sign-in', methods=['POST'])
+    @Controller.json_request
     @Controller.validate_params(login_param, password_param)
     def sign_in():
         data = request.get_json()
