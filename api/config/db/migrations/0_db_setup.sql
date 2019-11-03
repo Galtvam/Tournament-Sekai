@@ -36,9 +36,9 @@ CREATE TABLE IF NOT EXISTS follow(
 );
 
 CREATE TABLE IF NOT EXISTS tournament(
-  cod_tournament VARCHAR(10) PRIMARY KEY NOT NULL,
+  cod_tournament SERIAL PRIMARY KEY,
   "name" VARCHAR(30) NOT NULL,
-  descripton TEXT,
+  "description" TEXT,
   "start_date" DATE NOT NULL,
   end_date  DATE NOT NULL,
   owner_login VARCHAR(20) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS participant(
 
 CREATE TABLE IF NOT EXISTS moderate(
   moderator_login VARCHAR(20) NOT NULL,
-  cod_tournament VARCHAR(16) NOT NULL,
+  cod_tournament SERIAL,
 
   PRIMARY KEY (moderator_login, cod_tournament),
   FOREIGN KEY (moderator_login) REFERENCES "user" ("login") ,
@@ -83,15 +83,15 @@ CREATE TABLE IF NOT EXISTS moderate(
 
 CREATE TABLE IF NOT EXISTS team(
   initials VARCHAR(5) PRIMARY KEY NOT NULL,
-  "name" VARCHAR(20) NOT NULL
+  "name" VARCHAR(26) NOT NULL
 
 );
 
 CREATE TABLE IF NOT EXISTS match(
-  id_match VARCHAR(10) NOT NULL,
+  id_match INT,
   "date" DATE NOT NULL,
   winner VARCHAR(5),
-  cod_tournament VARCHAR(10) NOT NULL,
+  cod_tournament SERIAL,
 
   PRIMARY KEY (id_match, cod_tournament),
   FOREIGN KEY (winner) REFERENCES team (initials),
@@ -99,9 +99,9 @@ CREATE TABLE IF NOT EXISTS match(
 );
 
 CREATE TABLE IF NOT EXISTS play(
-  initials VARCHAR(5) NOT NULL,
-  id_match VARCHAR(10) NOT NULL,
-  cod_tournament VARCHAR(10) NOT NULL,
+  initials VARCHAR(5),
+  id_match INT,
+  cod_tournament SERIAL,
 
   PRIMARY KEY (initials, id_match, cod_tournament),
   FOREIGN KEY (initials) REFERENCES team (initials),
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS play(
 CREATE TABLE IF NOT EXISTS integrate(
   participant_login VARCHAR(20) NOT NULL,
   initials VARCHAR(5) NOT NULL,
-  cod_tournament VARCHAR(10) NOT NULL,
+  cod_tournament SERIAL,
 
   PRIMARY KEY (participant_login,initials, cod_tournament),
   FOREIGN KEY (participant_login) REFERENCES "user" ("login"),
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS mvp_bet(
   punter_login VARCHAR(20) NOT NULL,
   participant_login VARCHAR(20) NOT NULL,
   initials VARCHAR(5) NOT NULL,
-  cod_tournament VARCHAR(10) NOT NULL,
+  cod_tournament SERIAL,
 
   PRIMARY KEY (punter_login, participant_login,initials, cod_tournament),
   FOREIGN KEY (punter_login) REFERENCES "user" ("login"),
@@ -135,37 +135,40 @@ CREATE TABLE IF NOT EXISTS mvp_bet(
 
 );
 
-CREATE TYPE "type" AS ENUM ('VARCHAR','TEXT','INT','FLOAT','DATE');
+CREATE TYPE "type" AS ENUM ('VARCHAR','TEXT','INT','FLOAT','DATE','SERIAL');
 
 CREATE TABLE IF NOT EXISTS attribute(
-  id_attribute VARCHAR(10) PRIMARY KEY NOT NULL,
+  id_attribute INT,
+  cod_tournament SERIAL,
   "name" VARCHAR(20) NOT NULL,
   "type" "type" NOT NULL,
-  cod_tournament VARCHAR(10) NOT NULL,
+  
 
+  PRIMARY KEY (id_attribute, cod_tournament),
   FOREIGN KEY (cod_tournament) REFERENCES tournament (cod_tournament)
 
 );
 
 CREATE TABLE IF NOT EXISTS attribute_participant(
-  id_attribute VARCHAR(10) NOT NULL,
+  id_attribute INT,
   participant_login VARCHAR(20) NOT NULL,
+  cod_tournament SERIAL,
   "value" TEXT,
 
-  PRIMARY KEY (id_attribute, participant_login),
-  FOREIGN KEY (id_attribute) REFERENCES attribute (id_attribute),
+  PRIMARY KEY (id_attribute, cod_tournament, participant_login),
+  FOREIGN KEY (id_attribute,cod_tournament) REFERENCES attribute (id_attribute,cod_tournament),
   FOREIGN KEY (participant_login) REFERENCES "user" ("login")
 
 );
 
 CREATE TABLE IF NOT EXISTS attribute_match(
-  id_attribute VARCHAR(10) NOT NULL,
-  id_match VARCHAR(10) NOT NULL,
-  cod_tournament VARCHAR(10) NOT NULL,
+  id_attribute INT,
+  id_match INT,
+  cod_tournament SERIAL,
   "value" TEXT,
 
   PRIMARY KEY (id_attribute, id_match,cod_tournament),
-  FOREIGN KEY (id_attribute) REFERENCES attribute (id_attribute),
+  FOREIGN KEY (id_attribute,cod_tournament) REFERENCES attribute (id_attribute,cod_tournament),
   FOREIGN KEY (id_match,cod_tournament) REFERENCES match (id_match,cod_tournament)
 
 );
