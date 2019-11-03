@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from flask_cors import CORS
 
 from .environment import Environment
 
@@ -10,7 +11,9 @@ class TestEnvironment(Environment):
     name = 'test'
 
     @staticmethod
-    def setup(connector):
+    def setup(application, connector):
+        CORS(application)
+        
         connector.execute_sql(f'TRUNCATE TABLE {UsersModel.table_name} RESTART IDENTITY')
         seeds_sql = TestEnvironment.get_seeds_sql()
         connector.execute_sql(seeds_sql)

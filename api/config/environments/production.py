@@ -4,5 +4,5 @@ class ProductionEnvironment(Environment):
     name = 'production'
 
     @staticmethod
-    def setup(connector):
+    def setup(application, connector):
         pass

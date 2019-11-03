@@ -13,9 +13,9 @@ class Environment:
         Environment.environment_class = envs
 
     @staticmethod
-    def setup(connector):
+    def setup(application, connector):
         if not Environment.environment_class:
             raise NotFoundEnvironmentError
         for environment in Environment.environment_class:
             print(f'Running {environment.name} setup...')
-            environment.setup(connector)
+            environment.setup(application, connector)

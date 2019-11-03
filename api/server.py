@@ -43,7 +43,7 @@ Controller.set_bcrypt(flask_bcrypt)
 
 # Configurações de ambiente
 Environment.set_environment(ENV)
-Environment.setup(db_connector)
+Environment.setup(application, db_connector)
 
 if __name__ == "__main__":
 	application.run(host=HOST, port=PORT, debug=DEBUG_MODE)

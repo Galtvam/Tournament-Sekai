@@ -3,11 +3,11 @@ class ErrorCodes:
         0: 'Ocorreu um erro desconhecido',
         1: 'Usuário não autenticado',
         3: 'A requisição precisa ser um JSON',
-        4: 'Paramêtros inválidos: %s',
+        4: 'Paramêtros inválidos: {}',
         5: 'Senha precisa ter no mínimo 8 caracateres',
         6: 'Senha pode ter no máximo 16 caracateres',
         7: 'Nome só pode conter letras',
-        8: 'Parâmetro %s não está presente',
+        8: 'Parâmetro {} não está presente',
         9: 'O Login já foi utilizado',
         10: 'O Email já foi utilizado',
         11: 'Usuário ou senha incorreta',
@@ -15,9 +15,9 @@ class ErrorCodes:
     }
 
     @staticmethod
-    def get_error_message(error_code, *args):
+    def get_error_message(error_code, args):
         try:
-            return ErrorCodes.errors.get(error_code, ErrorCodes.errors[0]) % args
+            return ErrorCodes.errors.get(error_code, ErrorCodes.errors[0]).format(', '.join(args))
         except TypeError:
             return ErrorCodes.errors.get(error_code, ErrorCodes.errors[0])
     
