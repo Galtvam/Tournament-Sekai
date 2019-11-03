@@ -1,6 +1,11 @@
 {% extends "layouts/main.html" %}
 {% block content %}
 <!-- Always shows a header, even in smaller screens. -->
+<div id="loader" class="loader">
+    <!-- MDL Spinner Component -->
+    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+</div>
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">

@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+import jwt
+from flask import Flask, render_template, request
 
 import datetime
  
@@ -18,7 +19,8 @@ def page_data(title, styles=None, scripts=None, **kwargs):
     styles = []
   
   # Scripts handle
-  default_scripts = ['js/main.js']
+  vendor_scripts = ['js/vendors/cookies.min.js', 'js/vendors/jwt-decode.min.js']
+  default_scripts = vendor_scripts + ['js/utils.js', 'js/main.js', 'js/api.js']
   if isinstance(scripts, str):
     scripts = [f'js/{scripts}.js']
   elif isinstance(scripts, list):
@@ -35,7 +37,6 @@ def page_data(title, styles=None, scripts=None, **kwargs):
   data.update(kwargs)
   return data
 
- 
 @app.route('/')
 def home():
   data = page_data(
@@ -51,10 +52,10 @@ def signup():
   )
   return render_template('signup.html', **data)
 
-@app.route('/dashboard/profile')
+@app.route('/dashboard')
 def profile():
   data = page_data(
-    title='Início',
+    title='Início', styles='dashboard', scripts='dashboard'
   )
   return render_template('profile.html', **data)
 

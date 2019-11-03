@@ -16,12 +16,25 @@ $loginFormSubmitButton.click(function() {
             }
         }
     });
-    $loginForm.submit();
 });
 
 //Event Listeners
 $loginForm.submit(function(event) {
     event.preventDefault();
+    let data = $loginForm.serializeObject();
+    
+    API.login(data, function(request, data){
+        if (request != null) {
+            request.responseJSON.errors.forEach(error => {
+                notify(error.message);
+            });
+        } else {
+            data = data.data;
+            setJWTToken(data.token);
+            document.location = '/dashboard';
+        }
+    });
+    return false;
 });
 
 
@@ -43,10 +56,26 @@ $signupFormSubmitButton.click(function() {
             }
         }
     });
-    $signupForm.submit();
 });
 
 //Event Listeners
 $signupForm.submit(function(event) {
     event.preventDefault();
+
+    let data = $signupForm.serializeObject();
+    data.birthday = formatDate($signupForm.find('input[name="birthday"]')[0].valueAsDate);
+
+    if (data.password != data.confirm_password) {
+        notify('As senhas não coincidiem');
+    } else {
+        API.register(data, function(request, data){
+            if (request != null) {
+                request.responseJSON.errors.forEach(error => {
+                    notify(error.message);
+                });
+            } else {
+                document.location = '/';
+            }
+        });
+    }
 });
