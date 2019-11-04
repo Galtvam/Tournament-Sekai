@@ -29,21 +29,29 @@ class TournamentsController(Controller):
         return Controller.format_response(result, status_code=200)
     
     @Controller.route('/tournaments', methods=['POST'])
+    @Controller.authenticate_user
     def create():
+        current_user = Controller.authenticated_user()
         data = request.get_json()
         tournament = TournamentsModel(data['name'], data['description'],
-        data['start_date'], data['end_date'], data['owner_login'])
+        data['start_date'], data['end_date'], current_user.login)
 
         tournament.insert()
         return Controller.format_response(status_code=201)
 
-    @Controller.route('/tournaments/<code>', methods=['PUT'])     
+    @Controller.route('/tournaments/<code>', methods=['PUT'])
+    @Controller.authenticate_user
     def update_by_code(code):
         data = request.get_json()
         tournament = TournamentsModel.find_by_cod_tournament(int(code))
         if tournament:
             tournament = tournament[0]
-            for field in ('name', 'description','start_date','end_date','owner_login'):
+
+            current_user = Controller.authenticated_user()
+            if not current_user.login == tournament.owner_login:
+                return Controller.format_response(errors=13, status_code=403) 
+            
+            for field in ('name', 'description','start_date','end_date'):
                 if field in data:
                     setattr(tournament, field, data[field])
 
@@ -51,13 +59,20 @@ class TournamentsController(Controller):
             return Controller.format_response(status_code=200)
         
         else:
-            return Controller.format_response(status_code=404) 
+            return Controller.format_response(status_code=404)
 
     @Controller.route('/tournaments/<code>', methods=['DELETE'])
+    @Controller.authenticate_user
     def delete_by_code(code):
         tournament = TournamentsModel.find_by_cod_tournament(int(code))
         if tournament:
             tournament = tournament[0]
+            
+            current_user = Controller.authenticated_user()
+
+            if not current_user.login == tournament.owner_login:
+                return Controller.format_response(errors=13, status_code=403)    
+
             tournament.delete_by_code()
             return Controller.format_response(status_code=200)
         else:
