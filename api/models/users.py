@@ -59,7 +59,7 @@ class UsersModel(Model):
         ]
         birthday = [
             (lambda v: isinstance(v, str), 4),
-            (lambda v: datetime.datetime.strptime(v, '%d/%m/%Y'), 4),
+            (lambda v: datetime.datetime.strptime(v, '%m/%d/%Y'), 4),
         ]
         password = [
             (lambda v: isinstance(v, str), 4),
