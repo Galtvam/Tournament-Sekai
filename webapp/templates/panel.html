@@ -1,0 +1,77 @@
+{% extends "layouts/dashboard.html" %}
+{% block dashboard_content %}
+<section>
+    <h4 class="mdl-typography--display-1">Seus Torneios</h4>
+    <div id="your-tournaments" class="tournament-carousel">
+        {% for i in range(3) %}
+        <div class="summary-tournament-card mdl-card mdl-shadow--2dp" data-cod="{{i}}">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Melhor torneio de Yu-gi-oh</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <div class="summary-tournament-card-info">
+                    <div>
+                        <i class="material-icons">date_range</i>
+                        <span>03/11 - 11/11</span>
+                    </div>
+                    <div>
+                        <i class="material-icons">group</i>
+                        <span>20 participantes</span>
+                    </div>
+                </div>
+                <div class="summary-tournament-card-description">
+                    Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI.
+                </div>
+            </div>
+            <div class="mdl-card__actions">
+                <div class="mdl-grid mdl-grid--no-spacing">
+                    <div class="mdl-layout-spacer"></div>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{'dashboard/tournaments/' + i|string}}">
+                        Ver
+                    </a>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</section>
+
+<section>
+    <h4 class="mdl-typography--display-1">Torneios em Destaque</h4>
+    <div id="summary-tournaments" class="tournament-carousel">
+            {% for i in range(10) %}
+            <div class="summary-tournament-card mdl-card mdl-shadow--2dp" data-cod="{{i}}">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text">Melhor torneio de Yu-gi-oh</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <div class="summary-tournament-card-info">
+                        <div>
+                            <i class="material-icons">date_range</i>
+                            <span>03/11 - 11/11</span>
+                        </div>
+                        <div>
+                            <i class="material-icons">group</i>
+                            <span>20 participantes</span>
+                        </div>
+                    </div>
+                    <div class="summary-tournament-card-description">
+                        Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI.
+                    </div>
+                </div>
+                <div class="mdl-card__actions">
+                    <div class="mdl-grid mdl-grid--no-spacing">
+                        <div class="mdl-layout-spacer"></div>
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{'dashboard/tournaments/' + i|string}}">
+                            Ver
+                        </a>
+                        <div class="mdl-layout-spacer"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</section>
+{% endblock %}

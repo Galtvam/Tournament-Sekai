@@ -6,8 +6,7 @@ $(window).on('load', function() {
             if (!data) {
                 document.location = '/';
             } else {
-                disableLoader();
-                main(data.data);
+                $(window).trigger('ready', [data.data]);
             }
         })
     }
@@ -17,7 +16,6 @@ function disableLoader() {
     $('#loader').fadeOut('slow');
 }
 
-function main(user) {
-    console.log(user);
-    
+function setDashboardTitle(title) {
+    $('#toolbar-title').html(title);
 }

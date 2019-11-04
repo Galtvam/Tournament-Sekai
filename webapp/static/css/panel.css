@@ -1,0 +1,61 @@
+
+.summary-tournament-card {
+    margin: 5px 20px;
+    outline: none;
+}
+
+.summary-tournament-card .mdl-card__title {
+    background-color: #607d8b;
+    color: white;
+    display: block;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.summary-tournament-card .mdl-card__title-text {
+    display: block;
+    font-weight: 700;
+    max-width: 100%;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.summary-tournament-card .mdl-card__supporting-text {
+    font-size: 15px;
+}
+
+.summary-tournament-card .material-icons {
+    font-size: 20px;
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+.summary-tournament-card .mdl-grid {
+    padding: 5px 0;
+}
+
+.summary-tournament-card .mdl-card__supporting-text {
+    padding-top: 0;
+}
+
+.summary-tournament-card .summary-tournament-card-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-tournament-card .summary-tournament-card-description {
+    display: -webkit-box;
+    line-height: 1.2em;
+    height: 4.8em;
+    max-height: 4.8em;
+    word-wrap: break-word;
+    overflow: hidden;
+    padding-top: 10px; 
+    text-align: justify;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}

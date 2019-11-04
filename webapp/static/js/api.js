@@ -13,6 +13,14 @@ class API {
         API.request('users/' + login, 'GET', {}, callback);
     }
 
+    static getTournament(cod, callback) {
+        if (cod == 1) {
+            callback(null, null);
+        } else {
+            callback(null, {cod_tournament: cod, name: 'Melhor Torneio de Yu-gi-oh'});
+        }
+    }
+
     static request(route, method, data, callback) {
         $.ajax({
             type: method,

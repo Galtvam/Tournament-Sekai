@@ -1,0 +1,51 @@
+.page-content {
+    display: flex;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.tournament-not-found {
+    align-self: center;
+}
+
+.tournament-info-card {
+    padding: 30px 30px 30px 30px;
+    width: 100%;
+}
+
+.tournament-info-card .mdl-card__title {
+    padding-bottom: 0;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.tournament-info-card .mdl-card__title h2 {
+    margin-top: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.tournament-info-card .icon-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tournament-info-card .material-icons {
+    font-size: 20px;
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+.tournament-info-card .mdl-card__supporting-text {
+    box-sizing: border-box;
+    padding-top: 0;
+    width: 100%;
+}
+
+.tournament-info-card .tournament-description {
+    line-height: 1.5em;
+    padding-top: 30px;
+    text-align: justify;
+}

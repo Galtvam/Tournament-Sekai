@@ -1,5 +1,7 @@
 {% extends "layouts/main.html" %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
 <!-- Always shows a header, even in smaller screens. -->
 <div id="loader" class="loader">
     <!-- MDL Spinner Component -->
@@ -9,16 +11,18 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Title</span>
+        <span id="toolbar-title" class="mdl-layout-title">{{dashboard_title}}</span>
     </div>
     </header>
     <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Title</span>
+        <div class="drawer-profile">
+            <span data-api="user-name" class="mdl-layout-title">Igor Fernandes</span>
+            <span data-api="user-login" class="mdl-layout-sub-title">Igorxp5</span>
+        </div>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="/dashboard">Painel</a>
+            <a class="mdl-navigation__link" href="/dashboard/profile">Perfil</a>
+            <a class="mdl-navigation__link" href="/dashboard/teams">Times</a>
         </nav>
     </div>
     <main class="mdl-layout__content">
@@ -27,5 +31,11 @@
             {% endblock %}
         </div>
     </main>
+
 </div>
+
+{% endblock %}
+
+{% block vendors %}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 {% endblock %}

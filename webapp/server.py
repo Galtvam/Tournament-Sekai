@@ -2,7 +2,7 @@ import jwt
 from flask import Flask, render_template, request
 
 import datetime
- 
+
 app = Flask(__name__)
 
 # FIXME: Somente para modo desenvolvedor
@@ -55,9 +55,18 @@ def signup():
 @app.route('/dashboard')
 def profile():
   data = page_data(
-    title='Início', styles='dashboard', scripts='dashboard'
+    title='Painel', styles=['dashboard', 'panel'], scripts=['dashboard', 'panel'],
+    dashboard_title='Painel'
   )
-  return render_template('profile.html', **data)
+  return render_template('panel.html', **data)
+
+@app.route('/dashboard/tournaments/<cod>')
+def tournament(cod):
+  data = page_data(
+    title='Torneio', styles=['dashboard', 'tournament'], scripts=['dashboard', 'tournament'],
+    dashboard_title='Torneio'
+  )
+  return render_template('tournament.html', **data)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8081, debug=True)

@@ -9,3 +9,22 @@
     width: 100vw;
     z-index: 1000;
 }
+
+.page-content {
+    padding: 32px;
+}
+
+.mdl-layout__drawer {
+    border: none;
+}
+
+.drawer-profile {
+    background-color: #607d8b;
+    color: #FFFFFF;
+    padding: 30px;
+    text-transform: capitalize;
+}
+
+.drawer-profile span[data-api="user-login"] {
+    text-transform: lowercase;
+}

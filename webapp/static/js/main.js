@@ -24,3 +24,11 @@ function getCurrentLogin() {
 function setJWTToken(token) {
     Cookies.set('jwt_token', token);
 }
+
+function refreshFrontData(key, value) {
+    $('[data-api="' + key + '"]').text(value);
+}
+
+function setTitle(title) {
+    document.title = title + ' - TournamentSekai'
+}

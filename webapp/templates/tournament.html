@@ -1,0 +1,39 @@
+{% extends "layouts/dashboard.html" %}
+{% block dashboard_content %}
+<section class="tournament-not-found" style="display: none; text-align:center;">
+    <div>
+        <i class="material-icons" style="font-size: 60px;">warning</i>
+        <h2 class="mdl-typography--display-2">Torneio não encontrado</h2>
+    </div>
+</section>
+<section>
+    <div class="mdl-card mdl-shadow--2dp tournament-info-card" style="display:none;">
+        <div class="mdl-card__title">
+            <h2 class="mdl-typography--display-2">Melhor Torneio de Yu-gi-oh</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div class="icon-info">
+                <div>
+                    <i class="material-icons">date_range</i>
+                    <span>03/11 - 11/11</span>
+                </div>
+                <div>
+                    <i class="material-icons">person</i>
+                    <span>igorxp5</span>
+                </div>
+                <div>
+                    <i class="material-icons">group</i>
+                    <span>20 participantes</span>
+                </div>
+            </div>
+            <div class="tournament-description">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+                Aliquid debitis perspiciatis delectus ea distinctio totam 
+                sit accusamus soluta officiis, expedita, iste dolorem itaque! 
+                Atque hic sed quas distinctio maiores magni?
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
