@@ -18,7 +18,7 @@ class Api:
     def user(self):
         if not self._user:
             login = jwt.decode(self.auth_token, verify=False)['identity']
-            self._user = self.authenticated_request('GET', f'{self.host}/users/{login}').json()
+            self._user = self.authenticated_request('GET', f'{self.host}/users/{login}').json()['data']
         return self._user
 
     def login(self, username, password):

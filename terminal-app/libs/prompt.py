@@ -55,3 +55,11 @@ def print_success(message):
     print()
     print(Fore.GREEN + message)
     print(Style.RESET_ALL)
+
+def bright(message):
+    return Style.BRIGHT + message + Style.RESET_ALL
+
+def section_title(title):
+    print('\n###################################')
+    print(bright(title.center(35)))
+    print('###################################\n')
