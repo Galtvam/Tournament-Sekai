@@ -77,3 +77,23 @@ class TournamentsController(Controller):
             return Controller.format_response(status_code=200)
         else:
             return Controller.format_response(status_code=404)    
+
+    @Controller.route('/<cod_tournaments>/<initials>/members', methods=['GET'])   
+    def view_members(cod_tournament, initials):
+        tournament = TournamentsModel.find_by_cod_tournament(int(code))
+        team = TeamsModel.find_by_initials(initials)
+        if tournament and team:
+            pass #falta
+        else:
+            return Controller.format_response(status_code=404)  
+
+    @Controller.route('/<cod_tournaments>/<initials>/members', methods=['POST'])
+    def add_member(cod_tournament,initials):
+        tournament = TournamentsModel.find_by_cod_tournament(int(code))
+        team = TeamsModel.find_by_initials(initials)
+        if tournament and team:
+            pass #falta
+
+        else:
+            return Controller.format_response(status_code=404)  
+

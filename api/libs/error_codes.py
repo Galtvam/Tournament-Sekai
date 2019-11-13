@@ -12,6 +12,7 @@ class ErrorCodes:
         10: 'O Email já foi utilizado',
         11: 'Usuário ou senha incorreta',
         12: 'Token de Autenticação inválido',
+        13: 'Usuário não possui permissão para alterar informações',
     }
 
     @staticmethod

@@ -69,3 +69,17 @@ class TournamentsModel(Model):
     def delete_by_code(self):
         sql = (f"DELETE FROM {self.table_name} WHERE cod_tournament = '{self.cod_tournament}'")
         self.connector.execute_sql(sql)
+
+    @staticmethod
+    def add_member(cod_tournament, initials, login):
+        '''
+        Adiciona membro ao time naquele torneio
+        '''
+        sql = (f"INSERT INTO integrate VALUES ( '{cod_tournament}', '{initials}', '{login}'")
+        self.connector.execute_sql(sql)
+        
+    @staticmethod
+    def view_members(cod_tournament, initials, login):
+        sql (f"SELECT login FROM integrate WHERE cod_tournament = '{cod_tournament}', "
+        f"initials = '{initials}', participant_login = '{cod_tournament}'")
+        self.connector.execute_sql(sql)

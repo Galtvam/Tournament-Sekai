@@ -35,6 +35,15 @@ CREATE TABLE IF NOT EXISTS follow(
 
 );
 
+CREATE TABLE IF NOT EXISTS team(
+  initials VARCHAR(5) PRIMARY KEY NOT NULL,
+  "name" VARCHAR(26) NOT NULL,
+  owner_login VARCHAR(20) NOT NULL,
+
+  FOREIGN KEY (owner_login) REFERENCES "user" ("login")
+
+);
+
 CREATE TABLE IF NOT EXISTS tournament(
   cod_tournament SERIAL PRIMARY KEY,
   "name" VARCHAR(30) NOT NULL,
@@ -42,21 +51,22 @@ CREATE TABLE IF NOT EXISTS tournament(
   "start_date" DATE NOT NULL,
   end_date  DATE NOT NULL,
   owner_login VARCHAR(20) NOT NULL,
+  winner VARCHAR(5),
 
-
+  FOREIGN KEY ("winner") REFERENCES team ("initials"),
   FOREIGN KEY (owner_login) REFERENCES "user" ("login")
 
 );
 
 CREATE TABLE IF NOT EXISTS moderator(
-  login VARCHAR(20) PRIMARY KEY NOT NULL,
+  "login" VARCHAR(20) PRIMARY KEY NOT NULL,
 
   FOREIGN KEY ("login") REFERENCES "user" ("login")
 
 );
 
 CREATE TABLE IF NOT EXISTS punter(
-  login VARCHAR(20) PRIMARY KEY NOT NULL,
+  "login" VARCHAR(20) PRIMARY KEY NOT NULL,
   balance FLOAT NOT NULL,
 
   FOREIGN KEY ("login") REFERENCES "user" ("login")
@@ -64,7 +74,7 @@ CREATE TABLE IF NOT EXISTS punter(
 );
 
 CREATE TABLE IF NOT EXISTS participant(
-  login VARCHAR(20) PRIMARY KEY NOT NULL,
+  "login" VARCHAR(20) PRIMARY KEY NOT NULL,
   nickname VARCHAR(20) UNIQUE NOT NULL,
 
   FOREIGN KEY ("login") REFERENCES "user" ("login")
@@ -78,13 +88,6 @@ CREATE TABLE IF NOT EXISTS moderate(
   PRIMARY KEY (moderator_login, cod_tournament),
   FOREIGN KEY (moderator_login) REFERENCES "user" ("login") ,
   FOREIGN KEY (cod_tournament) REFERENCES tournament (cod_tournament)
-);
-
-
-CREATE TABLE IF NOT EXISTS team(
-  initials VARCHAR(5) PRIMARY KEY NOT NULL,
-  "name" VARCHAR(26) NOT NULL
-
 );
 
 CREATE TABLE IF NOT EXISTS match(
