@@ -10,7 +10,7 @@ def validate_password(answers, current):
         raise ValidationError('', reason='Senha pode ter no máximo 16 caracateres')
     return True
 
-def validate_required(field_name):
+def validate_required(answers, current):
     if len(current) == 0:
         raise ValidationError('', reason=f'O campo é obrigatório')
     return True

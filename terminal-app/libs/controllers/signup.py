@@ -9,9 +9,9 @@ from datetime import datetime
 def signup(api):
     while True:
         register_data = {
-            'name': Text(message='Qual seu nome', validate=validate_required),
+            'name': Text(message='Qual seu nome', validate=validate_name),
             'birthday': Text(message='Quando você nasceu (dd/mm/YYYY)', validate=validate_birthday),
-            'username': Text(message='Digite um nome de usuário', validate=validate_username),
+            'username': Text(message='Digite um nome de usuário', validate=validate_required),
             'email': Text(message='Digite um e-mail', validate=validate_email)
         }
 
