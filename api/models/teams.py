@@ -46,3 +46,12 @@ class TeamsModel(Model):
         sql = (f"DELETE FROM {self.table_name} WHERE initials = '{self.initials}'")
         self.connector.execute_sql(sql)
 
+
+    def add_member_to_team(self, login):
+        sql = (f"INSERT INTO team_member VALUES('{login}', '{self.initials}')")
+        self.connector.execute_sql(sql)
+
+    def view_members_in_team(self):
+        sql = (f"SELECT participant_login FROM team_member WHERE initials = '{self.initials}'")
+        result = self.connector.execute_sql(sql)
+        return result

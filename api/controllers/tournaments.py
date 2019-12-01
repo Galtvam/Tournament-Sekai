@@ -2,6 +2,7 @@ from flask import jsonify, request
 
 from controllers import Controller
 from models import TournamentsModel
+from models import TeamsModel
 
 class TournamentsController(Controller):
 
@@ -78,22 +79,28 @@ class TournamentsController(Controller):
         else:
             return Controller.format_response(status_code=404)    
 
-    @Controller.route('/<cod_tournaments>/<initials>/members', methods=['GET'])   
+    @Controller.route('/tournaments/<cod_tournament>/<initials>/members', methods=['GET'])
+    @Controller.authenticate_user 
     def view_members(cod_tournament, initials):
-        tournament = TournamentsModel.find_by_cod_tournament(int(code))
+        tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
         team = TeamsModel.find_by_initials(initials)
-        if tournament and team:
-            pass #falta
-        else:
-            return Controller.format_response(status_code=404)  
 
-    @Controller.route('/<cod_tournaments>/<initials>/members', methods=['POST'])
-    def add_member(cod_tournament,initials):
-        tournament = TournamentsModel.find_by_cod_tournament(int(code))
-        team = TeamsModel.find_by_initials(initials)
         if tournament and team:
-            pass #falta
+            tournament = tournament[0]
+            members = tournament.view_members_in_tournament(initials)
+            return Controller.format_response(members, status_code=200)
 
         else:
-            return Controller.format_response(status_code=404)  
+            return Controller.format_response(errors=17,status_code=404)  
+
+    @Controller.route('/tournaments/<cod_tournament>/<initials>/members', methods=['POST'])
+    @Controller.authenticate_user
+    def add_team_to_tournament(cod_tournament,initials):
+        tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
+        team = TeamsModel.find_by_initials(initials)
+        if tournament and team:
+            pass #TODO
+
+        else:
+            return Controller.format_response(errors=17, status_code=404)  
 

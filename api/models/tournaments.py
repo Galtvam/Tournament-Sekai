@@ -11,7 +11,7 @@ class TournamentsModel(Model):
 
     def __init__(self, name, description, start_date, end_date, owner_login, cod_tournament=None):
 
-        self.cod_tournament  = cod_tournament
+        self.cod_tournament  = int(cod_tournament)
         self.name = name
         self.description = description
         self.start_date = start_date
@@ -23,7 +23,7 @@ class TournamentsModel(Model):
                 'VALUES (DEFAULT,%s, %s, %s, %s, %s) RETURNING cod_tournament')
         result = self.connector.execute_sql(sql, (self.name,
         self.description, self.start_date, self.end_date, self.owner_login))
-        self.initials = result[0]['cod_tournament']
+        self.cod_tournament = result[0]['cod_tournament']
     
     def to_dict(self):
         return {'cod_tournament': self.cod_tournament, 'name': self.name,
@@ -71,15 +71,15 @@ class TournamentsModel(Model):
         self.connector.execute_sql(sql)
 
     @staticmethod
-    def add_member(cod_tournament, initials, login):
+    def add_member_to_tournament(login, initials, cod_tournament):
         '''
         Adiciona membro ao time naquele torneio
         '''
-        sql = (f"INSERT INTO integrate VALUES ( '{cod_tournament}', '{initials}', '{login}'")
+        sql = (f"INSERT INTO integrate VALUES ( '{login}', '{initials}', '{cod_tournament}')")
         self.connector.execute_sql(sql)
         
-    @staticmethod
-    def view_members(cod_tournament, initials, login):
-        sql (f"SELECT login FROM integrate WHERE cod_tournament = '{cod_tournament}', "
-        f"initials = '{initials}', participant_login = '{cod_tournament}'")
-        self.connector.execute_sql(sql)
+    def view_members_in_tournament(self, initials):
+        sql = (f"SELECT participant_login FROM integrate WHERE cod_tournament = {self.cod_tournament} and "
+        f"initials = '{initials}'")
+        result = self.connector.execute_sql(sql)
+        return result

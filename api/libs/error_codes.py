@@ -13,10 +13,11 @@ class ErrorCodes:
         11: 'Usuário ou senha incorreta',
         12: 'Token de Autenticação inválido',
         13: 'Usuário não possui permissão',
-        14: 'Usuário não encontrado'
+        14: 'Usuário não encontrado',
         15: 'Time não encontrado',
-        16: 'Nenhum time encontrado com as palavras chave'
-    }
+        16: 'Nenhum time encontrado com as palavras chave',
+        17: 'Esse usuário já está no time ou não existe',
+            }   
 
     @staticmethod
     def get_error_message(error_code, args):

@@ -96,6 +96,18 @@ INSERT INTO play VALUES('SDS',4 ,4);
 INSERT INTO play VALUES('UA',5 ,4);
 INSERT INTO play VALUES('SDS',5 ,4);
 
+--Membros do time
+
+INSERT INTO "team_member" VALUES('Midoriyazinho', 'UA');
+INSERT INTO "team_member" VALUES('Natsuzinho', 'FT');
+INSERT INTO "team_member" VALUES('Gintokizinho', 'CDS');
+INSERT INTO "team_member" VALUES('Seiyazinho', 'CDZ');
+INSERT INTO "team_member" VALUES('Ichigozinho', 'SDS');
+INSERT INTO "team_member" VALUES('Gonzinho', 'OSS');
+INSERT INTO "team_member" VALUES('Luffyzinho', 'SDS');
+INSERT INTO "team_member" VALUES('Gokuzinho', 'CDZ');
+
+
 --Integrantes
 
 INSERT INTO "integrate" VALUES('Midoriyazinho', 'UA', 1);
