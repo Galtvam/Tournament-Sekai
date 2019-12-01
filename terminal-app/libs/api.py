@@ -15,6 +15,11 @@ class ConnectionError(ApiError):
         errors = [{'code': -1, 'message': 'Não foi possível conectar-se à API'}]
         super().__init__(errors)
 
+class ServerInternalError(ApiError):
+    def __init__(self):
+        errors = [{'code': -2, 'message': 'Ocorreu um erro no servidor'}]
+        super().__init__(errors)
+
 class Api:
     HOST = 'http://localhost:8080'
 
@@ -62,10 +67,11 @@ class Api:
         except requests.exceptions.ConnectionError:
             raise ConnectionError
     
+    # GET /users/<login>
     def get_user(self, login):
-        data = {'login': login}
-        return self.authenticated_request('GET', f'{self.host}/users/{login}', json=data)
+        return self.authenticated_request('GET', f'{self.host}/users/{login}')
     
+    # PUT /users/<Login
     def update_user(self, login, payload):
         response = self.authenticated_request('PUT', f'{self.host}/users/{login}', json=payload)
         # Forçar atualização das informações de cache do usuário logado
@@ -73,12 +79,28 @@ class Api:
             self._user = None
         return response
 
+    # GET /teams?search=<keyword>
+    def find_team(self, keyword):
+        return self.authenticated_request('GET', f'{self.host}/teams?search={keyword}')
+    
+    # GET /teams/<initials>
+    def get_team(self, initials):
+        return self.authenticated_request('GET', f'{self.host}/users/{initials}')
+    
+    # POST /teams
+    def create_team(self, initials, name):
+        payload = {'initials': initials, 'name': name}
+        return self.authenticated_request('POST', f'{self.host}/teams', json=payload)
+
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
         headers.update({'Authorization': f'Bearer {self.auth_token}'})
         kwargs.update({'headers': headers})
         try:
-            response = requests.request(method, url, *args, **kwargs).json()
+            response = requests.request(method, url, *args, **kwargs)
+            if response.status_code == 500:
+                raise ServerInternalError
+            response = response.json()
             errors = response['errors']
             if errors:
                 raise BadRequest(errors)
