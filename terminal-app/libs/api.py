@@ -1,9 +1,19 @@
 import jwt
 import requests
 
-class BadRequest(Exception):
+
+class ApiError(Exception):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+class BadRequest(ApiError):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+class ConnectionError(ApiError):
+    def __init__(self):
+        errors = [{'code': -1, 'message': 'Não foi possível conectar-se à API'}]
+        super().__init__(errors)
 
 class Api:
     HOST = 'http://localhost:8080'
@@ -18,7 +28,7 @@ class Api:
     def user(self):
         if not self._user:
             login = jwt.decode(self.auth_token, verify=False)['identity']
-            self._user = self.authenticated_request('GET', f'{self.host}/users/{login}').json()['data']
+            self._user = self.authenticated_request('GET', f'{self.host}/users/{login}')
         return self._user
 
     def login(self, username, password):
@@ -26,12 +36,15 @@ class Api:
             'login': username,
             'password': password
         }
-        response = requests.post(f'{self.host}/sign-in', json=credentials).json()
-        data = response['data']
-        errors = response['errors']
-        if errors:
-            raise BadRequest(errors)
-        self.auth_token = data['token']
+        try:
+            response = requests.post(f'{self.host}/sign-in', json=credentials).json()
+            data = response['data']
+            errors = response['errors']
+            if errors:
+                raise BadRequest(errors)
+            self.auth_token = data['token']
+        except requests.exceptions.ConnectionError:
+            raise ConnectionError
     
     def register(self, name, email, username, birthday, password):
         data = {
@@ -41,13 +54,30 @@ class Api:
             'birthday': birthday,
             'password': password
         }
-        response = requests.post(f'{self.host}/sign-up', json=data).json()
-        errors = response['errors']
-        if errors:
-            raise BadRequest(errors)
+        try:
+            response = requests.post(f'{self.host}/sign-up', json=data).json()
+            errors = response['errors']
+            if errors:
+                raise BadRequest(errors)
+        except requests.exceptions.ConnectionError:
+            raise ConnectionError
     
+    def get_user(self, login):
+        data = {'login': login}
+        return self.authenticated_request('GET', f'{self.host}/users/{login}', json=data)
+    
+    def update_user(self, login, payload):
+        return self.authenticated_request('PUT', f'{self.host}/users/{login}', json=payload)
+
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
         headers.update({'Authorization': f'Bearer {self.auth_token}'})
         kwargs.update({'headers': headers})
-        return requests.request(method, url, *args, **kwargs)
+        try:
+            response = requests.request(method, url, *args, **kwargs).json()
+            errors = response['errors']
+            if errors:
+                raise BadRequest(errors)
+            return response['data']
+        except requests.exceptions.ConnectionError:
+            raise ConnectionError

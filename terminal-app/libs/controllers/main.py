@@ -1,4 +1,4 @@
-from . import Controller, call_controller
+from . import Controller
 from ..prompt import *
 from ..api import BadRequest
 
@@ -13,9 +13,4 @@ def main(api):
         ('Procurar por uma equipe', 'find_team'),
         ('Deslogar', 'logout')
     ]
-    option = True
-    while option not in (None, 'logout'):
-        option = Menu(choices=menu)
-        if option and option != 'logout':
-            call_controller(option, api=api)
-        print()
+    Menu(api, menu, 'logout')

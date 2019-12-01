@@ -2,6 +2,7 @@ import inquirer
 
 from colorama import init, Fore, Style
 
+
 init()
 
 def prompt(question):
@@ -35,8 +36,20 @@ def Path(*args, **kwargs):
     question = prompt(inquirer.Path('question', *args, **kwargs))
     return question.get('question') if question else None
 
-def Menu(*args, **kwargs):
-    return List(message='O que você deseja fazer', *args, **kwargs)
+def Menu(api, menu_options, exit_option=None, clear=True, *args, **kwargs):
+    from .controllers import call_controller
+    if not exit_option:
+        menu_options.append(('Voltar', 'back'))
+        exit_option = 'back'
+    if clear:
+        clear_screen()
+    option = True 
+    while option not in (None, exit_option):
+        print()
+        option = List(message='O que você deseja fazer', 
+                      choices=menu_options, *args, **kwargs)
+        if option and option != exit_option:
+            call_controller(option, api=api)
 
 
 def print_errors(errors):
@@ -63,3 +76,6 @@ def section_title(title):
     print('\n###################################')
     print(bright(title.center(35)))
     print('###################################\n')
+
+def clear_screen():
+    print("\033c", end="")

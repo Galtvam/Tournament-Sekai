@@ -1,15 +1,18 @@
 from . import Controller, call_controller
 from ..prompt import *
-from ..api import BadRequest
+from ..api import ApiError
 
 @Controller
 def login(api):
     while True:
-        username = Text(message='Digite seu login')
-        password = Password(message='Digite sua senha')
+        # TODO: Remover usuário padrão conlcuir o desenvovlimento
+        # username = Text(message='Digite seu login')
+        # password = Password(message='Digite sua senha')
+        username = 'Igorxp5'
+        password = '12345678'
         try:
             api.login(username, password)
-        except BadRequest as exception:
+        except ApiError as exception:
             errors = exception.args[0]
             beatifier_param_names(errors)
             print_errors(errors)

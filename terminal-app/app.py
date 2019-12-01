@@ -2,6 +2,10 @@ from libs.prompt import *
 from libs.controllers import *
 
 from libs.api import Api
+from libs.prompt import *
+
+import locale
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 api = Api()
 
@@ -11,9 +15,4 @@ menu = [
     ('Sair', 'exit')
 ]
 
-option = True
-while option not in (None, 'exit'):
-    option = Menu(choices=menu)
-    if option and option != 'exit':
-        call_controller(option, api=api)
-    print()
+Menu(api, menu, 'exit')

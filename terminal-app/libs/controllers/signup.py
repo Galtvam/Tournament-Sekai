@@ -1,6 +1,6 @@
-from . import Controller, call_controller
+from . import Controller
 from ..prompt import *
-from ..api import BadRequest
+from ..api import ApiError
 
 import re
 
@@ -14,7 +14,7 @@ def signup(api):
         register_data = {
             'name': Text(message='Qual seu nome', validate=validate_name),
             'birthday': Text(message='Quando você nasceu (dd/mm/YYYY)', validate=validate_birthday),
-            'username': Text(message='Digite um nome de usuário', validate=True),
+            'username': Text(message='Digite um nome de usuário', validate=validate_username),
             'email': Text(message='Digite um e-mail', validate=validate_email)
         }
 
@@ -35,7 +35,7 @@ def signup(api):
             
             try:
                 api.register(**register_data)
-            except BadRequest as exception:
+            except ApiError as exception:
                 errors = exception.args[0]
                 beatifier_param_names(errors)
                 print_errors(errors)
@@ -66,6 +66,11 @@ def validate_password(answers, current):
         raise ValidationError('', reason='Senha precisa ter no mínimo 8 caracateres')
     if len(current) > 16:
         raise ValidationError('', reason='Senha pode ter no máximo 16 caracateres')
+    return True
+
+def validate_username(answers, current):
+    if len(current) == 0:
+        raise ValidationError('', reason='O nome de usuário é obrigatório')
     return True
 
 def validate_email(answers, current):
