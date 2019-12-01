@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS tournament(
   owner_login VARCHAR(20) NOT NULL,
   winner VARCHAR(5),
 
-  FOREIGN KEY ("winner") REFERENCES team ("initials"),
+  FOREIGN KEY ("winner") REFERENCES team ("initials") ON UPDATE CASCADE,
   FOREIGN KEY (owner_login) REFERENCES "user" ("login") ON DELETE CASCADE
 
 );
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS match(
   cod_tournament SERIAL,
 
   PRIMARY KEY (id_match, cod_tournament),
-  FOREIGN KEY (winner) REFERENCES team (initials),
+  FOREIGN KEY (winner) REFERENCES team (initials) ON UPDATE CASCADE,
   FOREIGN KEY (cod_tournament) REFERENCES tournament (cod_tournament) ON DELETE CASCADE
 );
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS play(
   cod_tournament SERIAL,
 
   PRIMARY KEY (initials, id_match, cod_tournament),
-  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE,
+  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_match,cod_tournament) REFERENCES match (id_match,cod_tournament) ON DELETE CASCADE,
   FOREIGN KEY (cod_tournament) REFERENCES tournament (cod_tournament) ON DELETE CASCADE
 );
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS team_member(
 
   PRIMARY KEY (participant_login,initials),
   FOREIGN KEY (participant_login) REFERENCES "user" ("login") ON DELETE CASCADE,
-  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE
+  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE ON UPDATE CASCADE
 
 );
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS integrate(
 
   PRIMARY KEY (participant_login,initials, cod_tournament),
   FOREIGN KEY (participant_login) REFERENCES "user" ("login") ON DELETE CASCADE,
-  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE,
+  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (cod_tournament) REFERENCES tournament (cod_tournament) ON DELETE CASCADE
 
 );
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS mvp_bet(
   PRIMARY KEY (punter_login, participant_login,initials, cod_tournament),
   FOREIGN KEY (punter_login) REFERENCES "user" ("login") ON DELETE CASCADE,
   FOREIGN KEY (participant_login) REFERENCES "user" ("login") ON DELETE CASCADE,
-  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE,
+  FOREIGN KEY (initials) REFERENCES team (initials) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (cod_tournament) REFERENCES tournament (cod_tournament) ON DELETE CASCADE
 
 );

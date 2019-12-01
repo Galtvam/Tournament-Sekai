@@ -54,12 +54,12 @@ class TeamsController(Controller):
             
             if not current_user.login == team.owner_login:
                 return Controller.format_response(errors=13, status_code=403) 
-
+    
             for field in ('initials', 'name','owner_login'):
                 if field in data:
                     setattr(team, field, data[field])
-            team.update()
-            return Controller.format_response(status_code=200)
+            team.update(initials)
+            return Controller.format_response(team.to_dict(), status_code=200)
 
         else:
             return Controller.format_response(errors=15, status_code=404)

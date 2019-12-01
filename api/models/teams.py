@@ -46,9 +46,10 @@ class TeamsModel(Model):
         )
         return TeamsModel.instantiate_rows(result)
 
-    def update(self):
+    def update(self, initials=None):
+        initials = initials or self.initials
         sql = (f"UPDATE {self.table_name} SET initials = '{self.initials}', "
-        f"name = '{self.name}', owner_login = '{self.owner_login}' WHERE initials = '{self.initials}'")
+        f"name = '{self.name}', owner_login = '{self.owner_login}' WHERE initials = '{initials}'")
         self.connector.execute_sql(sql)
 
     def delete(self):
