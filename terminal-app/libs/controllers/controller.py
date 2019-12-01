@@ -1,4 +1,4 @@
-from ..prompt import clear_screen, print_error, print_errors
+from ..prompt import Menu, clear_screen, print_error, print_errors
 
 registred_controllers = {}
 controllers_api = None
@@ -15,6 +15,7 @@ def call_controller(controller, *args, **kwargs):
     if controller not in registred_controllers:
         clear_screen()
         print_error('Seção em Manutenção')
+        Back()
     else:
         try:
             registred_controllers[controller](*args, **kwargs)

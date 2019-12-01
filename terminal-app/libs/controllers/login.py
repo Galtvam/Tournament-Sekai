@@ -5,7 +5,6 @@ from ..api import ApiError
 @Controller
 def login(api):
     while True:
-        #TODO: Remover usuário padrão conlcuir o desenvovlimento
         username = Text(message='Digite seu login')
         password = Password(message='Digite sua senha')
 

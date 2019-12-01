@@ -8,6 +8,9 @@ from datetime import datetime
 @Controller
 def signup(api):
     while True:
+        clear_screen()
+        section_title('Cadastro')
+
         register_data = {
             'name': Text(message='Qual seu nome', validate=validate_name),
             'birthday': Text(message='Quando você nasceu (dd/mm/YYYY)', validate=validate_birthday),
@@ -43,6 +46,7 @@ def signup(api):
                     break
             else:
                 print_success('Conta criada com sucesso')
+                Back()
                 break
         except:
             break
