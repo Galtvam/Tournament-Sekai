@@ -67,7 +67,11 @@ class Api:
         return self.authenticated_request('GET', f'{self.host}/users/{login}', json=data)
     
     def update_user(self, login, payload):
-        return self.authenticated_request('PUT', f'{self.host}/users/{login}', json=payload)
+        response = self.authenticated_request('PUT', f'{self.host}/users/{login}', json=payload)
+        # Forçar atualização das informações de cache do usuário logado
+        if self._user and self._user['login'] == login:
+            self._user = None
+        return response
 
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
