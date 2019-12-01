@@ -1,7 +1,7 @@
 from flask import jsonify, request
 
 from controllers import Controller
-from models import UsersModel
+from models import UsersModel, TeamsModel
 
 class UsersController(Controller):
 	@Controller.route('/users/<login>')
@@ -32,3 +32,14 @@ class UsersController(Controller):
 			logged_user.update()
 			return Controller.format_response(status_code=200)
 		return Controller.format_response(errors=10, status_code=400)
+	
+	
+	@Controller.route('/users/<login>/teams')
+	@Controller.authenticate_user
+	def user_teams(login):
+		teams = TeamsModel.user_teams(login)
+		result = []
+		for team in teams:
+			result.append(team.to_dict())
+		return Controller.format_response(result, status_code=404)
+

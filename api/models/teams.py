@@ -35,7 +35,16 @@ class TeamsModel(Model):
             f'SELECT * FROM {TeamsModel.table_name};'
         )
         return TeamsModel.instantiate_rows(result)
-
+    
+    @staticmethod
+    def user_teams(login):
+        result = TeamsModel.connector.execute_sql(
+            'SELECT DISTINCT * FROM team_member t ' 
+            f'RIGHT JOIN {TeamsModel.table_name} m ON t.initials = m.initials ' 
+            'WHERE LOWER("participant_login")=LOWER(%s) OR LOWER("owner_login")=LOWER(%s)',
+            (login, login)
+        )
+        return TeamsModel.instantiate_rows(result)
 
     def update(self):
         sql = (f"UPDATE {self.table_name} SET initials = '{self.initials}', "
