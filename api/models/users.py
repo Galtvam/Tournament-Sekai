@@ -79,7 +79,7 @@ class UsersModel(Model):
                 }
 
     def find_by_login(login):
-        sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE {UsersModel.col_login}=''LOWER(%s)'
+        sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE LOWER({UsersModel.col_login})=''LOWER(%s)'
         result = UsersModel.connector.execute_sql(sql, (login,))
         return UsersModel.instantiate_rows(result)
 

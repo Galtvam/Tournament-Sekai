@@ -1,12 +1,12 @@
 --Usuários
-INSERT INTO "user" VALUES('Gokuzinho','33333333','Son Goku', 'gokuzinho@gmail.com', '02/02/2010','02/02/2010');
-INSERT INTO "user" VALUES('Luffyzinho', '77777777', 'Monkey D. Luffy', 'luffyzinho@gmail.com', '03/03/2003','03/03/20011');
-INSERT INTO "user" VALUES('Ichigozinho', '66666666', 'Kurosaki Ichigo', 'ichigozinho@gmail.com', '04/03/2003','04/03/2009');
-INSERT INTO "user" VALUES('Natsuzinho', '22222222', 'Natsu Dragneel', 'natsuzinho@gmail.com', '05/03/2003','05/03/2007' );
-INSERT INTO "user" VALUES('Gonzinho', '55555555','Gon Freecs', 'gonzinho@gmail.com', '06/03/2003','06/03/2014');
-INSERT INTO "user" VALUES('Gintokizinho','44444444','Sakata Gintoki', 'gintokizinho@gmail.com', '07/03/2003','07/03/2012');
-INSERT INTO "user" VALUES('Midoriyazinho', '11111111', 'Izuku Midoriya', 'midoriya@gmail.com', '08/03/2003','08/03/2013');
-INSERT INTO "user" Values('Seiyazinho','88888888','Seiya de Pegasus', 'seiyazinho@gmail.com', '09/09/2015', '12/12/2012');
+INSERT INTO "user" VALUES('gokuzinho','33333333','Son Goku', 'gokuzinho@gmail.com', '02/02/2010','02/02/2010');
+INSERT INTO "user" VALUES('luffyzinho', '77777777', 'Monkey D. Luffy', 'luffyzinho@gmail.com', '03/03/2003','03/03/20011');
+INSERT INTO "user" VALUES('ichigozinho', '66666666', 'Kurosaki Ichigo', 'ichigozinho@gmail.com', '04/03/2003','04/03/2009');
+INSERT INTO "user" VALUES('natsuzinho', '22222222', 'Natsu Dragneel', 'natsuzinho@gmail.com', '05/03/2003','05/03/2007' );
+INSERT INTO "user" VALUES('gonzinho', '55555555','Gon Freecs', 'gonzinho@gmail.com', '06/03/2003','06/03/2014');
+INSERT INTO "user" VALUES('gintokizinho','44444444','Sakata Gintoki', 'gintokizinho@gmail.com', '07/03/2003','07/03/2012');
+INSERT INTO "user" VALUES('midoriyazinho', '11111111', 'Izuku Midoriya', 'midoriya@gmail.com', '08/03/2003','08/03/2013');
+INSERT INTO "user" Values('seiyazinho','88888888','Seiya de Pegasus', 'seiyazinho@gmail.com', '09/09/2015', '12/12/2012');
 
 --Times
 
@@ -30,71 +30,71 @@ INSERT INTO "tournament" VALUES (6,'Torneio de Espadas','Torneio que reune todos
 
 --Telefones
 
-INSERT INTO phone VALUES ('+558192024396','Gokuzinho');
-INSERT INTO phone VALUES ('+558179964184','Luffyzinho');
-INSERT INTO phone VALUES ('+558111441468','Ichigozinho');
-INSERT INTO phone VALUES ('+558172421724','Natsuzinho');
-INSERT INTO phone VALUES ('+558164802709','Gonzinho');
-INSERT INTO phone VALUES ('+558130807150','Gintokizinho');
-INSERT INTO phone VALUES ('+558123849320','Midoriyazinho');
-INSERT INTO phone VALUES ('+558100422296','Seiyazinho');
-INSERT INTO phone VALUES ('+558184587668','Gonzinho');
-INSERT INTO phone VALUES ('+558184587669','Gonzinho');
+INSERT INTO "phone" VALUES ('+558192024396','Gokuzinho');
+INSERT INTO "phone" VALUES ('+558179964184','Luffyzinho');
+INSERT INTO "phone" VALUES ('+558111441468','Ichigozinho');
+INSERT INTO "phone" VALUES ('+558172421724','Natsuzinho');
+INSERT INTO "phone" VALUES ('+558164802709','Gonzinho');
+INSERT INTO "phone" VALUES ('+558130807150','Gintokizinho');
+INSERT INTO "phone" VALUES ('+558123849320','Midoriyazinho');
+INSERT INTO "phone" VALUES ('+558100422296','Seiyazinho');
+INSERT INTO "phone" VALUES ('+558184587668','Gonzinho');
+INSERT INTO "phone" VALUES ('+558184587669','Gonzinho');
 
 --Partidas
 
-INSERT INTO match VALUES(1,'10/10/2019','UA',1);
-INSERT INTO match VALUES(2,'10/10/2019','FT',1);
-INSERT INTO match VALUES(3,'10/10/2019','UA',1);
-INSERT INTO match VALUES(4,'10/10/2019','FT',1);
-INSERT INTO match VALUES(5,'10/10/2019','UA',1);
+INSERT INTO "match" VALUES(1,'10/10/2019','UA',1);
+INSERT INTO "match" VALUES(2,'10/10/2019','FT',1);
+INSERT INTO "match" VALUES(3,'10/10/2019','UA',1);
+INSERT INTO "match" VALUES(4,'10/10/2019','FT',1);
+INSERT INTO "match" VALUES(5,'10/10/2019','UA',1);
 
 --Jogos
-INSERT INTO play VALUES('UA',1,1);
-INSERT INTO play VALUES('CDZ',1,1);
-INSERT INTO play VALUES('FT',2,1);
-INSERT INTO play VALUES('SDS',2,1);
-INSERT INTO play VALUES('UA',3,1);
-INSERT INTO play VALUES('FT',3,1);
-INSERT INTO play VALUES('CDS',4,1);
-INSERT INTO play VALUES('FT',4,1);
-INSERT INTO play VALUES('UA',5,1);
-INSERT INTO play VALUES('FT',5,1);
+INSERT INTO "play" VALUES('UA',1,1);
+INSERT INTO "play" VALUES('CDZ',1,1);
+INSERT INTO "play" VALUES('FT',2,1);
+INSERT INTO "play" VALUES('SDS',2,1);
+INSERT INTO "play" VALUES('UA',3,1);
+INSERT INTO "play" VALUES('FT',3,1);
+INSERT INTO "play" VALUES('CDS',4,1);
+INSERT INTO "play" VALUES('FT',4,1);
+INSERT INTO "play" VALUES('UA',5,1);
+INSERT INTO "play" VALUES('FT',5,1);
 
 
 --Partidas
-INSERT INTO match VALUES(1,'05/11/2019','UA',2);
-INSERT INTO match VALUES(2,'06/11/2019','OSS',2);
-INSERT INTO match VALUES(3,'07/11/2019','UA',2);
+INSERT INTO "match" VALUES(1,'05/11/2019','UA',2);
+INSERT INTO "match" VALUES(2,'06/11/2019','OSS',2);
+INSERT INTO "match" VALUES(3,'07/11/2019','UA',2);
 
 --Jogos
-INSERT INTO play VALUES('UA',1,2);
-INSERT INTO play VALUES('CDZ',1,2);
-INSERT INTO play VALUES('OSS',2,2);
-INSERT INTO play VALUES('SDS',2,2);
-INSERT INTO play VALUES('UA',3,2);
-INSERT INTO play VALUES('OSS',3,2);
+INSERT INTO "play" VALUES('UA',1,2);
+INSERT INTO "play" VALUES('CDZ',1,2);
+INSERT INTO "play" VALUES('OSS',2,2);
+INSERT INTO "play" VALUES('SDS',2,2);
+INSERT INTO "play" VALUES('UA',3,2);
+INSERT INTO "play" VALUES('OSS',3,2);
 
 
 --Partidas
 
-INSERT INTO match VALUES(1,'06/10/2019','SDS',4);
-INSERT INTO match VALUES(2,'06/11/2019','FT',4);
-INSERT INTO match VALUES(3,'07//12/2019','UA',4);
-INSERT INTO match VALUES(4,'08/12/2019','UA',4);
-INSERT INTO match VALUES(5,'11/05/2019','UA',4);
+INSERT INTO "match" VALUES(1,'06/10/2019','SDS',4);
+INSERT INTO "match" VALUES(2,'06/11/2019','FT',4);
+INSERT INTO "match" VALUES(3,'07//12/2019','UA',4);
+INSERT INTO "match" VALUES(4,'08/12/2019','UA',4);
+INSERT INTO "match" VALUES(5,'11/05/2019','UA',4);
 
 --Jogos
-INSERT INTO play VALUES('SDS',1 ,4);
-INSERT INTO play VALUES('UA',1 ,4);
-INSERT INTO play VALUES('FT',2 ,4);
-INSERT INTO play VALUES('OSS',2 ,4);
-INSERT INTO play VALUES('UA',3 ,4);
-INSERT INTO play VALUES('CDZ',3 ,4);
-INSERT INTO play VALUES('UA',4 ,4);
-INSERT INTO play VALUES('SDS',4 ,4);
-INSERT INTO play VALUES('UA',5 ,4);
-INSERT INTO play VALUES('SDS',5 ,4);
+INSERT INTO "play" VALUES('SDS',1 ,4);
+INSERT INTO "play" VALUES('UA',1 ,4);
+INSERT INTO "play" VALUES('FT',2 ,4);
+INSERT INTO "play" VALUES('OSS',2 ,4);
+INSERT INTO "play" VALUES('UA',3 ,4);
+INSERT INTO "play" VALUES('CDZ',3 ,4);
+INSERT INTO "play" VALUES('UA',4 ,4);
+INSERT INTO "play" VALUES('SDS',4 ,4);
+INSERT INTO "play" VALUES('UA',5 ,4);
+INSERT INTO "play" VALUES('SDS',5 ,4);
 
 --Membros do time
 
