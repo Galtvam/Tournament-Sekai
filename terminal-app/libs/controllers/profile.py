@@ -45,6 +45,7 @@ def update_profile(api):
     print_profile(api.user)
 
     print_success('Informações atualizadas com sucesso')
+    Back()
 
 def print_profile(user):
     birthday = datetime.strptime(user['birthday'], '%d/%m/%Y').strftime('%d/%B/%Y')

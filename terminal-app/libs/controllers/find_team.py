@@ -44,6 +44,7 @@ def find_team(api):
                 break
         else:
             print_team(team)
+            Back()
             break
 
 def print_team(team):

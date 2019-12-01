@@ -9,7 +9,6 @@ locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 api = Api()
 
-
 def _header():
     clear_screen()
     section_title('Entrada')
