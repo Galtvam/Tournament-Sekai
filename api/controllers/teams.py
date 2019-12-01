@@ -5,12 +5,21 @@ from models import TeamsModel
 
 class TeamsController(Controller):
 
+    # GET /teams?search=
     @Controller.route('/teams')
     def index():
         all_teams = TeamsModel.get_all()
+        search_keyword = request.args.get('search')
+        if search_keyword:
+            k = search_keyword.lower()
+            all_teams = [t for t in all_teams 
+                         if k in t.to_dict()['initials'].lower() or k in t.to_dict()['name'].lower()]
         result = []
         for team in all_teams:
             result.append(team.to_dict())
+        # Somente retornar erro se for uma pesquisa por palavra chave e não for encontrado nada
+        if search_keyword and not result:
+            return Controller.format_response(errors=16, status_code=404) 
         return Controller.format_response(result, status_code=200)
 
     @Controller.route('/teams/<initials>')
@@ -21,16 +30,16 @@ class TeamsController(Controller):
             return Controller.format_response(team.to_dict(), status_code=200)
 
         else:
-            return Controller.format_response(status_code=404)
+            return Controller.format_response(errors=15, status_code=404)
             
     @Controller.route('/teams', methods=['POST'])
     @Controller.authenticate_user
     def create(): #TESTAR Adicionar owner_login
         data = request.get_json()
         current_user = Controller.authenticated_user()
-        team = TeamsModel(data['initials'], data['name'],current_user)
+        team = TeamsModel(data['initials'], data['name'], current_user.login)
         team.insert()
-        return Controller.format_response(status_code=201)
+        return Controller.format_response(team.to_dict(), status_code=201)
 
     @Controller.route('/teams/<initials>', methods=['PUT'])
     @Controller.authenticate_user

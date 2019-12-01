@@ -18,7 +18,7 @@ class TeamsModel(Model):
         self.initials = result[0]['initials']
     
     def to_dict(self):
-        return {'initials': self.initials, 'name': self.name, 'owner_login': self.owner_login }
+        return {'initials': self.initials, 'name': self.name, 'owner': self.owner_login }
 
     @staticmethod
     def find_by_initials(initials):

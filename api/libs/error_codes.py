@@ -12,8 +12,15 @@ class ErrorCodes:
         10: 'O Email já foi utilizado',
         11: 'Usuário ou senha incorreta',
         12: 'Token de Autenticação inválido',
+<<<<<<< HEAD
         13: 'Usuário não possui permissão',
         14: 'Usuário não encontrado'
+=======
+        13: 'Usuário não possui permissão para alterar informações',
+        14: 'Usuário não encontrado',
+        15: 'Time não encontrado',
+        16: 'Nenhum time encontrado com as palavras chave'
+>>>>>>> [API] Pesquisar por time por iniciais e nome
     }
 
     @staticmethod
