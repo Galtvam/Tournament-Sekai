@@ -2,6 +2,7 @@ import inquirer
 
 from colorama import init, Fore, Style
 
+CHAR_PIXEL = "█"
 
 init()
 
@@ -77,11 +78,39 @@ def print_success(message):
 def bright(message):
     return Style.BRIGHT + message + Style.RESET_ALL
 
+def red_text(text):
+    return Fore.RED + text + Style.RESET_ALL
+
+def green_text(text):
+    return Fore.GREEN + text + Style.RESET_ALL
+
 def section_title(title):
     section_width = 45
     print('\n' + '#'*section_width)
     print(bright(title.center(section_width)))
     print('#'*section_width + '\n')
+
+def escape_color(rgb):
+    colors = [str(i) for i in rgb]
+    return "\033[38;2;" + ";".join(colors) + "m"
+
+def reset_color():
+    print("\033[0m", end="")
+    return "\033[0m"
+
+def string_color(rgb, string):
+    return escape_color(rgb) + string + reset_color()
+
+def move_cursor(x, y):
+    print("\033[%d;%dH" % (y, x), end="")
+
+def set_pixel(x, y, rgb):
+	string_pixel = string_color(rgb, CHAR_PIXEL)
+	move_cursor(x, y)
+	print(string_pixel)
+
+def clear_pixel(x, y):
+    set_pixel(x, y, CONSOLE_BACKGROUND)
 
 def clear_screen():
     print("\033c", end="")
