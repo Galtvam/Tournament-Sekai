@@ -13,4 +13,5 @@ def find_user(api):
     login = Text(message='Nome de usuário')
     user = api.get_user(login)
     print_profile(user)
+    Back()
 
