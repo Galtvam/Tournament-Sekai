@@ -70,8 +70,13 @@ class UsersModel(Model):
             setattr(self, field, None)
 
     def to_dict(self):
-        return {'login': self.login, 'name': self.name,
-                'email': self.email, 'birthday': self.birthday.strftime('%d/%m/%Y')}
+        return {
+                'login': self.login, 'name': self.name,
+                'email': self.email, 'birthday': self.birthday.strftime('%d/%m/%Y'),
+                'street': self.street, 'number': self.number, 'complement': self.complement,
+                'neighborhood': self.neighborhood, 'city': self.city,
+                'state': self.state, 'country': self.country
+                }
 
     def find_by_login(login):
         sql = f'SELECT * FROM "{UsersModel.table_name}" WHERE {UsersModel.col_login}=''LOWER(%s)'
