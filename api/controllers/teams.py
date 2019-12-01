@@ -1,7 +1,7 @@
 from flask import jsonify, request
 
 from controllers import Controller
-from models import TeamsModel
+from models import TeamsModel, UsersModel
 
 class TeamsController(Controller):
 
@@ -113,6 +113,8 @@ class TeamsController(Controller):
         if team:
             team = team[0]
             members = team.view_members_in_team()
+            find_login = UsersModel.find_by_login
+            members = [find_login(m['participant_login'])[0].to_dict() for m in members]
             return Controller.format_response(members, status_code=200)
         else:
             return Controller.format_response(errors=14, status_code=404)
