@@ -13,6 +13,7 @@ class ErrorCodes:
         11: 'Usuário ou senha incorreta',
         12: 'Token de Autenticação inválido',
         13: 'Usuário não possui permissão para alterar informações',
+        14: 'Usuário não encontrado'
     }
 
     @staticmethod

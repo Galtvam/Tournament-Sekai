@@ -10,7 +10,7 @@ class UsersController(Controller):
 		user = UsersModel.find_by_login(login)
 		if user:
 			return Controller.format_response(user[0].to_dict(), status_code=200)
-		return Controller.format_response(status_code=404)
+		return Controller.format_response(errors=14, status_code=404)
 
 
 	@Controller.route('/users/<login>', methods=['PUT'])
