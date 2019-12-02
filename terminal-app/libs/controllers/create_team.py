@@ -1,5 +1,5 @@
 from . import Controller, call_controller
-from .find_team import view_team
+from .find_team import view_team, print_team
 from ..prompt import *
 from ..api import ApiError
 from ..validations import validate_required
@@ -22,4 +22,5 @@ def create_team(api):
         team = api.create_team(**team_data)
         print_team(api, team['initials'])
         print_success('Time criado com sucesso')
+        Back()
 

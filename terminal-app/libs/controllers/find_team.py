@@ -33,17 +33,17 @@ def find_team(api):
             print(f"\nEncontramos {len(found_teams)} times com as palavras chave\n")
             teams = [(f"{team['initials']} - {team['name']}", team['initials']) for team in found_teams]
             options = teams + [('Nenhum desses', '__exit__')]
-            initials = List(message="Por qual time você está procurando?", choices=options)
-            if not initials:
+            team = List(message="Por qual time você está procurando?", choices=options)
+            if not team:
                 return
         
-        if initials == '__exit__':
+        if team == '__exit__':
             try_again = Confirm(message='Quer tentar pesquisar usando outro termo?')
 
             if not try_again:
                 break
         else:
-            view_team(api, initials)
+            view_team(api, team)
             Back()
             break
 
@@ -53,11 +53,15 @@ def my_teams(api):
     section_title('Meus Times')
     teams = api.user_teams(api.user['login'])
     team_choices = [(f"{team['initials']} - {team['name']}", team['initials']) for team in teams]
+    if not teams:
+        print_error('Você ainda não participa de nenhum time\n')
     options = team_choices + [('Voltar', '__exit__')]
     choose = List(message='Você participa dos seguinte times', choices=options)
     if choose != '__exit__':
-        team = [t for t in teams if t['initials'] == choose][0]
-        view_team(api, team['initials'])
+        team = [t for t in teams if t['initials'] == choose]
+        if team:
+            team[0]
+            view_team(api, team['initials'])
 
 
 @Controller
@@ -82,6 +86,15 @@ def team_new_member(api, initials):
     print_success('Usuário adicionado como membro com sucesso')
     Back()
 
+@Controller
+def delete_team(api, initials):
+    confirm = Confirm(message='Você tem certeza que quer deletar o time?')
+    if confirm:
+        api.delete_team(initials)
+        print_success('Time removido com sucesso')
+        Back()
+
+
 def view_team(api, initials):
     def _header():
         print_team(api, initials)
@@ -91,8 +104,14 @@ def view_team(api, initials):
             ('Alterar iniciais do time', 'change_team_initials'),
             ('Alterar nome do time', 'change_team_name'),
             ('Adicionar novo membro', 'team_new_member'),
+            ('Apagar o time', 'delete_team'),
         ]
-        Menu(api, menu, before_show=_header, initials=initials)
+        try:
+            Menu(api, menu, before_show=_header, initials=initials)
+        except BadRequest as exception:
+            errors = exception.args[0]
+            if errors[0]['code'] != 15:
+                raise exception
 
 def print_team(api, initials):
     clear_screen()
