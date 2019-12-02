@@ -134,6 +134,25 @@ class Api:
     def get_tournament_teams(self, cod):
         return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}/teams')
 
+    # PUT /tournaments/<cod>
+    def update_tournament(self, cod, payload):
+        return self.authenticated_request('PUT', f'{self.host}/tournaments/{cod}', json=payload) 
+    
+    # DELETE /tornaments/<cod>
+    def delete_tournament(self, cod):
+        return self.authenticated_request('DELETE', f'{self.host}/tournaments/{cod}')
+
+    # GET /tournaments/<cod_tournament>/teams
+    def tournament_teams(cod):
+        return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}/teans')
+
+
+    # POST /tournaments/<cod_tournament>/teams
+    def add_team_to_tournament(self, cod, payload):
+        return self.authenticated_request('POST', f'{self.host}/tournaments/{cod}', json=payload)
+
+
+    
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
         headers.update({'Authorization': f'Bearer {self.auth_token}'})

@@ -22,7 +22,7 @@ def update_profile(api):
     print_profile(user)
     
     address_data = {
-        'street': Text(message='Qual o nome da rua onde você?', 
+        'street': Text(message='Qual o nome da rua onde você mora?', 
                        default=user['street']),
         'number': Text(message='Qual o número da sua residência?', 
                        default=user['number']),

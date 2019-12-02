@@ -29,7 +29,7 @@ def create_tournament(api):
         tournament_data['end_date'] = tournament_data['end_date'].strftime('%m/%d/%Y')
     
         tournament = api.create_tournament(tournament_data)
-        print_tournament(api, cod)
+        print_tournament(api, tournament['cod_tournament'])
         print_success('Torneio criado com sucesso')
         Back()
 

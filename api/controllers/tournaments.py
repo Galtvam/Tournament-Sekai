@@ -1,5 +1,6 @@
 from flask import jsonify, request
 
+from datetime import datetime
 from controllers import Controller
 from models import TournamentsModel, TeamsModel, ModerationsModel, UsersModel
 
@@ -31,7 +32,7 @@ class TournamentsController(Controller):
     def get(cod_tournament):
         tournaments = TournamentsModel.find_by_cod_tournament(int(cod_tournament))
         if not tournaments:
-            Controller.format_response(errors=21, status_code=200)
+            return Controller.format_response(errors=21, status_code=404)
         return Controller.format_response(tournaments[0].to_dict(), status_code=200)
 
     @Controller.route('/tournaments', methods=['POST'])
@@ -39,11 +40,13 @@ class TournamentsController(Controller):
     def create():
         current_user = Controller.authenticated_user()
         data = request.get_json()
+        data['start_date'] = datetime.strptime(data['start_date'], '%m/%d/%Y')
+        data['end_date'] = datetime.strptime(data['end_date'], '%m/%d/%Y')
         tournament = TournamentsModel(data['name'], data['description'],
         data['start_date'], data['end_date'], current_user.login)
 
         tournament.insert()
-        return Controller.format_response(tournament, status_code=201)
+        return Controller.format_response(tournament.to_dict(), status_code=201)
 
     @Controller.route('/tournaments/<code>', methods=['PUT'])
     @Controller.authenticate_user
@@ -52,7 +55,8 @@ class TournamentsController(Controller):
         tournament = TournamentsModel.find_by_cod_tournament(int(code))
         if tournament:
             tournament = tournament[0]
-
+            data['start_date'] = datetime.strptime(data['start_date'], '%d/%m/%Y')
+            data['end_date'] = datetime.strptime(data['end_date'], '%d/%m/%Y')
             current_user = Controller.authenticated_user()
             if not current_user.login == tournament.owner_login:
                 return Controller.format_response(errors=13, status_code=403) 
@@ -62,7 +66,7 @@ class TournamentsController(Controller):
                     setattr(tournament, field, data[field])
 
             tournament.update_by_code()
-            return Controller.format_response(tournament, status_code=200)
+            return Controller.format_response(tournament.to_dict(), status_code=200)
         
         else:
             return Controller.format_response(status_code=404)
