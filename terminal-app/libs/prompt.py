@@ -85,7 +85,7 @@ def green_text(text):
     return Fore.GREEN + text + Style.RESET_ALL
 
 def section_title(title):
-    section_width = 45
+    section_width = 55
     print('\n' + '#'*section_width)
     print(bright(title.center(section_width)))
     print('#'*section_width + '\n')

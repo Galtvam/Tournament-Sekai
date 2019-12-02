@@ -201,3 +201,13 @@ class Bracket:
         
         Bracket.draw_final_block(bracket)
         move_cursor(*tree_height)
+
+bracket_1 = Bracket('Igor', 'Sheldon', winner='Igor')
+bracket_2 = Bracket('Marcos', 'Seninha', winner='Seninha')
+bracket_3 = Bracket('Amigo 1', 'Amigo 2')
+bracket_4 = Bracket('Amigo 3', 'Amigo 4', winner='Amigo 3')
+bracket_5 = Bracket(bracket_1, bracket_2, winner='Igor')
+bracket_6 = Bracket(bracket_3, bracket_4)
+
+clear_screen()
+Bracket.draw_tree([bracket_1, bracket_2, bracket_3, bracket_4, bracket_5, bracket_6], (1, 3))

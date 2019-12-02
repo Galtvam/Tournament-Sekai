@@ -28,7 +28,7 @@ def find_team(api):
                 raise exception
         
         if len(found_teams) == 1:
-            team = found_teams[0]
+            team = found_teams[0]['initials']
         elif len(found_teams) > 1:
             print(f"\nEncontramos {len(found_teams)} times com as palavras chave\n")
             teams = [(f"{team['initials']} - {team['name']}", team['initials']) for team in found_teams]
@@ -44,7 +44,6 @@ def find_team(api):
                 break
         else:
             view_team(api, team)
-            Back()
             break
 
 @Controller

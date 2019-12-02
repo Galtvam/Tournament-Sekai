@@ -9,7 +9,7 @@ class StatisticsController(Controller):
     @Controller.json_request
     def get_periodic_tournament_participant():
         data = request.get_json()
-        result = StatisticsModel.periodic_tournament_participant(data['start_data'], data['end_data'])
+        result = StatisticsModel.periodic_tournament_participant(data['start_date'], data['end_date'])
         return Controller.format_response(result, status_code=200)
 
     

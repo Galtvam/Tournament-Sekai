@@ -27,7 +27,7 @@ class StatisticsModel(Model):
     def most_diferent_team_participation():
         sql = (f'SELECT "participant_login", COUNT("cod_tournament") '
             f'FROM {StatisticsModel.table_integrate} '
-            'GROUP BY "participant_login"'
+            'GROUP BY "participant_login" ORDER BY count DESC'
         )
         result = StatisticsModel.connector.execute_sql(sql)
         return result

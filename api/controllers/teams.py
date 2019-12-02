@@ -11,9 +11,9 @@ class TeamsController(Controller):
         all_teams = TeamsModel.get_all()
         search_keyword = request.args.get('search')
         if search_keyword:
-            k = search_keyword.lower()
+            k = search_keyword.lower().strip()
             all_teams = [t for t in all_teams 
-                         if k in t.to_dict()['initials'].lower() or k in t.to_dict()['name'].lower()]
+                         if k in t.initials.strip().lower() or k in t.name.strip().lower()]
         result = []
         for team in all_teams:
             result.append(team.to_dict())

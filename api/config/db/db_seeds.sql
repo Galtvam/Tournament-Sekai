@@ -1,12 +1,12 @@
 --Usuários
-INSERT INTO "user" VALUES('gokuzinho','33333333','Son Goku', 'gokuzinho@gmail.com', '02/02/2010','02/02/2010');
-INSERT INTO "user" VALUES('luffyzinho', '77777777', 'Monkey D. Luffy', 'luffyzinho@gmail.com', '03/03/2003','03/03/20011');
-INSERT INTO "user" VALUES('ichigozinho', '66666666', 'Kurosaki Ichigo', 'ichigozinho@gmail.com', '04/03/2003','04/03/2009');
-INSERT INTO "user" VALUES('natsuzinho', '22222222', 'Natsu Dragneel', 'natsuzinho@gmail.com', '05/03/2003','05/03/2007' );
-INSERT INTO "user" VALUES('gonzinho', '55555555','Gon Freecs', 'gonzinho@gmail.com', '06/03/2003','06/03/2014');
-INSERT INTO "user" VALUES('gintokizinho','44444444','Sakata Gintoki', 'gintokizinho@gmail.com', '07/03/2003','07/03/2012');
-INSERT INTO "user" VALUES('midoriyazinho', '11111111', 'Izuku Midoriya', 'midoriya@gmail.com', '08/03/2003','08/03/2013');
-INSERT INTO "user" Values('seiyazinho','88888888','Seiya de Pegasus', 'seiyazinho@gmail.com', '09/09/2015', '12/12/2012');
+INSERT INTO "user" VALUES('gokuzinho', '$2b$12$5/Z17zSeIudGgyVmorWv1.U/iWny6xNVVJWQ8K8xhI2HmJC/nRqIO', 'Son Goku', 'gokuzinho@gmail.com', '02/02/2010','02/02/2010');
+INSERT INTO "user" VALUES('luffyzinho', '$2b$12$9rXVhyf8j/DY7nJtw6q7m.f.5HdVX/K1HIz.M/2dzsXlYgWHbXkD2', 'Monkey D. Luffy', 'luffyzinho@gmail.com', '03/03/2003','03/03/20011');
+INSERT INTO "user" VALUES('ichigozinho', '$2b$12$hFtPSBOO/uPzf589tLjDFesiVwsREG2SUSdYUxo.Ur6YGZnvwdrle', 'Kurosaki Ichigo', 'ichigozinho@gmail.com', '04/03/2003','04/03/2009');
+INSERT INTO "user" VALUES('natsuzinho', '$2b$12$2ItDRmBIXoGAd8M1ch4wLOSAZajqggiQoXJnW2WH3a3/7C6v5pThK', 'Natsu Dragneel', 'natsuzinho@gmail.com', '05/03/2003','05/03/2007' );
+INSERT INTO "user" VALUES('gonzinho', '$2b$12$gqKEZJbsFUakdTF9Aa1PoupNK0Z3IJz0w5RpiH7R/iyNybL3L/oM.', 'Gon Freecs', 'gonzinho@gmail.com', '06/03/2003','06/03/2014');
+INSERT INTO "user" VALUES('gintokizinho', '$2b$12$pWdfky9WmAaAap168QNBuegj7GJ.w5itRQeL31VW7z/aFdFzNru32','Sakata Gintoki', 'gintokizinho@gmail.com', '07/03/2003','07/03/2012');
+INSERT INTO "user" VALUES('midoriyazinho', '$2b$12$ribXuWny2mc.eshfZxkNGO3c2UyFKe31a36iHppEpXp7QeZjtVyn2', 'Izuku Midoriya', 'midoriya@gmail.com', '08/03/2003','08/03/2013');
+INSERT INTO "user" Values('seiyazinho', '$2b$12$HGjwThI5Dm5z3Z8fkZoJZe7X5gn/FB8HgU2u3la5/2yuQbxMgnSRq','Seiya de Pegasus', 'seiyazinho@gmail.com', '09/09/2015', '12/12/2012');
 
 --Times
 

@@ -1,6 +1,7 @@
 import jwt
 import requests
 
+from datetime import datetime
 
 class ApiError(Exception):
     def __init__(self, *args, **kwargs):
@@ -158,6 +159,49 @@ class Api:
     # GET /users/<login>/tournaments
     def user_tournaments(self, login):
         return self.authenticated_request('GET', f'{self.host}/users/{login}/tournaments')
+    
+    def get_periodic_tournament_participant(self, starte_date, end_date):
+        payload = {
+            'start_date': datetime.strptime(start_date, '%d/%m/%Y').strftime('%m/%d/%Y'),
+            'end_date': datetime.strptime(end_date, '%d/%m/%Y').strftime('%m/%d/%Y')
+        }
+        return self.authenticated_request('GET', f'{self.host}/statistics/periodic-tournament-partcipant', json=payload)
+    
+    def get_most_diferent_team_participation(self):
+        return self.authenticated_request('GET', f'{self.host}/statistics/most-diferent-team-participation')
+    
+    def get_biggest_winners(self):
+        return self.authenticated_request('GET', f'{self.host}/statistics/biggest-winners')
+    
+    def get_biggest_winners_teams(self):
+        return self.authenticated_request('GET', f'{self.host}/statistics/biggest-winners-teams')
+    
+    def get_biggest_match_winners(self):
+        return self.authenticated_request('GET', f'{self.host}/statistics/biggest-match-winners')
+    
+    def get_biggest_match_winners_teams(self):
+        return self.authenticated_request('GET', f'{self.host}/statistics/biggest-match-winners-teams')
+    
+    def get_participants_information_one_attribute(self, cod_tournament, attribute):
+        payload = {
+            'cod_tournament': cod_tournament,
+            'attribute': attribute
+        }
+        return self.authenticated_request('GET', f'{self.host}/statistics/participants-one-attribute', json=payload)
+    
+    def get_best_participants_information_one_attribute(self, cod_tournament, attribute):
+        payload = {
+            'cod_tournament': cod_tournament,
+            'attribute': attribute
+        }
+        return self.authenticated_request('GET', f'{self.host}/statistics/best-participants-one-attribute', json=payload)
+
+    def get_worst_participants_information_one_attribute(self, cod_tournament, attribute):
+        payload = {
+            'cod_tournament': cod_tournament,
+            'attribute': attribute
+        }
+        return self.authenticated_request('GET', f'{self.host}/statistics/worst-participants-one-attribute', json=payload)
 
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
