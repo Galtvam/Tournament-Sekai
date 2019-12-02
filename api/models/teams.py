@@ -65,3 +65,7 @@ class TeamsModel(Model):
         sql = (f"SELECT participant_login FROM team_member WHERE initials = '{self.initials}'")
         result = self.connector.execute_sql(sql)
         return result
+
+    def remove_member_to_team(self, login):
+        sql = (f"DELETE FROM team_member WHERE initials='{self.initials}' AND participant_login='{login}'")
+        self.connector.execute_sql(sql)

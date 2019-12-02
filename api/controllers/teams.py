@@ -97,7 +97,10 @@ class TeamsController(Controller):
         if team:
             try:
                 team.add_member_to_team(data['login'])
-                return Controller.format_response(status_code=201) 
+                members = team.view_members_in_team()
+                find_login = UsersModel.find_by_login
+                members = [find_login(m['participant_login'])[0].to_dict() for m in members]
+                return Controller.format_response(members, status_code=201) 
             except:
                 return Controller.format_response(errors=17 ,status_code=404)
 
@@ -118,4 +121,29 @@ class TeamsController(Controller):
             return Controller.format_response(members, status_code=200)
         else:
             return Controller.format_response(errors=14, status_code=404)
+
+    
+    @Controller.route('/teams/<initials>/members', methods=['DELETE'])
+    @Controller.authenticate_user
+    def delete_members(initials):
+        data = request.get_json()
+        team = TeamsModel.find_by_initials(initials)
+        team = team[0]
+        current_user = Controller.authenticated_user()
+
+        if not current_user.login == team.owner_login:
+            return Controller.format_response(errors=13, status_code=403) 
+        
+        if team:
+            try:
+                team.remove_member_to_team(data['login'])
+                members = team.view_members_in_team()
+                find_login = UsersModel.find_by_login
+                members = [find_login(m['participant_login'])[0].to_dict() for m in members]
+                return Controller.format_response(members, status_code=200) 
+            except:
+                return Controller.format_response(errors=17 ,status_code=404)
+
+        else:
+            return Controller.format_response(errors=15, status_code=404)
 
