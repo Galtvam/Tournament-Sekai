@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS moderate(
 );
 
 CREATE TABLE IF NOT EXISTS match(
-  id_match INT,
+  id_match SERIAL,
   "date" DATE NOT NULL,
   winner VARCHAR(5),
   cod_tournament SERIAL,
