@@ -1,9 +1,7 @@
 from flask import jsonify, request
 
 from controllers import Controller
-from models import TournamentsModel
-from models import TeamsModel
-from models import ModerationsModel
+from models import TournamentsModel, TeamsModel, ModerationsModel, UsersModel
 
 class TournamentsController(Controller):
 
@@ -97,13 +95,61 @@ class TournamentsController(Controller):
             return Controller.format_response(members, status_code=200)
 
         else:
-            return Controller.format_response(errors=18,status_code=404)  
+            return Controller.format_response(errors=18, status_code=404)  
 
-    @Controller.route('/tournaments/<cod_tournament>/<initials>/members', methods=['POST'])
+    @Controller.route('/tournaments/<cod_tournament>/teams', methods=['GET'])
     @Controller.authenticate_user
-    def add_team_to_tournament(cod_tournament,initials):
+    def tournament_teams(cod_tournament):
         tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
-        team = TeamsModel.find_by_initials(initials)
+        if not tournament:
+            return Controller.format_response(errors=21, status_code=404)
+        tournament = tournament[0]
+        teams = tournament.tournament_teams()
+        return Controller.format_response(teams, status_code=200)
+
+    @Controller.route('/tournaments/<cod_tournament>/moderators')
+    @Controller.authenticate_user
+    def tournament_moderators(cod_tournament):
+        tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
+        if not tournament:
+            return Controller.format_response(errors=21 ,status_code=404)
+        tournament = tournament[0]
+        moderators = ModerationsModel.tournament_moderators(cod_tournament)
+        result = {
+            'cod_tournament': cod_tournament,
+            'moderators': [m.to_dict()['login'] for m in moderators]
+        }
+        return Controller.format_response(result, status_code=200)
+    
+    @Controller.route('/tournaments/<cod_tournament>/moderators', methods=['POST'])
+    @Controller.authenticate_user
+    def add_tournament_moderator(cod_tournament):
+        tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
+        if not tournament:
+            return Controller.format_response(errors=21 ,status_code=404)
+        tournament = tournament[0]
+        
+        current_user = Controller.authenticated_user()
+        is_moderator = ModerationsModel.is_moderator(cod_tournament, current_user.login) 
+
+        if not(current_user.login == tournament.owner_login or is_moderator):
+            return Controller.format_response(errors=13, status_code=403)
+
+        data = request.get_json()
+        ModerationsModel.add_tournament_moderator(cod_tournament, data['login'])
+        moderators = ModerationsModel.tournament_moderators(cod_tournament)
+        result = {
+            'cod_tournament': cod_tournament,
+            'moderators': [m.to_dict()['login'] for m in moderators]
+        }
+        return Controller.format_response(result, status_code=200)
+
+    @Controller.route('/tournaments/<cod_tournament>/teams', methods=['POST'])
+    @Controller.authenticate_user
+    def add_team_to_tournament(cod_tournament):
+        data = request.get_json()
+        tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
+        team = TeamsModel.find_by_initials(data['initials'])
         current_user = Controller.authenticated_user()
         #Verifica se existe o torneio e o time
         if tournament and team:
@@ -115,19 +161,34 @@ class TournamentsController(Controller):
                 members = team.view_members_in_team()
                 for member in members:
                     try:
-                        tournament.add_member_to_tournament(member['participant_login'], initials, cod_tournament)
+                        tournament.add_member_to_tournament(member['participant_login'], data['initials'], cod_tournament)
                     except:
                         return Controller.format_response(errors=19 ,status_code=404)
-                return Controller.format_response(status_code=201)
+                teams = tournament.tournament_teams()
+                return Controller.format_response(teams, status_code=201)
             
             else:
                 return Controller.format_response(errors=13, status_code=404)
 
         else:
-            return Controller.format_response(errors=18, status_code=404)  
+            return Controller.format_response(errors=18, status_code=404)
 
+    @Controller.route('/tournaments/<cod_tournament>/teams/<initials>/members', methods=['GET'])
+    @Controller.authenticate_user
+    def tournament_team_members(cod_tournament, initials):
+        tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)
+        if not tournament:
+            return Controller.format_response(errors=21, status_code=404)
+        tournament = tournament[0]
+        members = tournament.view_members_in_tournament(initials)
+        result = []
+        for member in members:
+            user = UsersModel.find_by_login(member['participant_login'])[0]
+            result.append(user.to_dict())
+        return Controller.format_response(result, status_code=200)
+        
 
-    @Controller.route('/tournaments/<cod_tournament>/<initials>/members', methods=['DELETE'])
+    @Controller.route('/tournaments/<cod_tournament>/teams/<initials>', methods=['DELETE'])
     @Controller.authenticate_user
     def delete_team_to_tournament(cod_tournament,initials):
         tournament = TournamentsModel.find_by_cod_tournament(cod_tournament)

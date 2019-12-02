@@ -85,6 +85,11 @@ class TournamentsModel(Model):
         f"initials = '{initials}'")
         result = self.connector.execute_sql(sql)
         return result
+    
+    def tournament_teams(self):
+        sql = (f"SELECT DISTINCT initials FROM integrate WHERE cod_tournament={self.cod_tournament}")
+        result = self.connector.execute_sql(sql)
+        return [r['initials'] for r in result]
 
     @staticmethod
     def delete_member_to_tournament(login, initials, cod_tournament):
