@@ -87,6 +87,10 @@ class Api:
     def get_team(self, initials):
         return self.authenticated_request('GET', f'{self.host}/teams/{initials}')
 
+    # DELETE /teams/<initials>
+    def delete_team(self, initials):
+        return self.authenticated_request('DELETE', f'{self.host}/teams/{initials}')
+
     # GET /users/<login>/teams
     def user_teams(self, login):
         return self.authenticated_request('GET', f'{self.host}/users/{login}/teams')
