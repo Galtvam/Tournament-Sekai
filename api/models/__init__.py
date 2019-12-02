@@ -6,3 +6,4 @@ from .teams import TeamsModel
 from .tournaments import TournamentsModel
 from .matchs import MatchsModel
 from .moderations import ModerationsModel
+from .statistics import StatisticsModel

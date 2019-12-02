@@ -5,4 +5,5 @@ from .users import UsersController
 from .auth import AuthController
 from .teams import TeamsController
 from .tournaments import TournamentsController
+from .statistics import StatisticsController
 
