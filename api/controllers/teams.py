@@ -76,7 +76,7 @@ class TeamsController(Controller):
             return Controller.format_response(errors=13, status_code=403) 
 
         if team:
-            team = team[0]
+            team = team
             team.delete()
             return Controller.format_response(status_code=200)
         else:
