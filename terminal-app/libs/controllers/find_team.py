@@ -60,7 +60,7 @@ def my_teams(api):
     if choose != '__exit__':
         team = [t for t in teams if t['initials'] == choose]
         if team:
-            team[0]
+            team = team[0]
             view_team(api, team['initials'])
 
 
