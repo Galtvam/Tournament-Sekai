@@ -50,7 +50,7 @@ def update_profile(api):
 def print_profile(user):
     birthday = datetime.strptime(user['birthday'], '%d/%m/%Y').strftime('%d/%B/%Y')
     birthday = birthday.title().replace('/', ' de ')
-    profile = (f"{bright('Nome:')} {user['name'].title()}\n"
+    profile = (f"\n{bright('Nome:')} {user['name'].title()}\n"
               f"{bright('Nome de usuário:')} {user['login']}\n"
               f"{bright('E-mail:')} {user['email']}\n"
               f"{bright('Data de Nascimento:')} {birthday}")

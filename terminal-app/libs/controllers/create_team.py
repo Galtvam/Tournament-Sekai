@@ -1,5 +1,5 @@
 from . import Controller, call_controller
-from .find_team import print_team
+from .find_team import view_team
 from ..prompt import *
 from ..api import ApiError
 from ..validations import validate_required
@@ -20,8 +20,6 @@ def create_team(api):
 
     if all(value is not None for value in team_data.values()):
         team = api.create_team(**team_data)
-        # TODO: Remover linha abaixo quando implementado na API
-        team = team_data
-        print_team(team)
+        print_team(api, team['initials'])
         print_success('Time criado com sucesso')
 

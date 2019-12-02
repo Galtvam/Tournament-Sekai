@@ -51,9 +51,9 @@ def Menu(api, menu_options, exit_option=None, clear=True,
         if callable(before_show):
             before_show()
         option = List(message='O que você deseja fazer', 
-                      choices=menu_options, *args, **kwargs)
+                      choices=menu_options)
         if option and option != exit_option:
-            call_controller(option, api=api)
+            call_controller(option, api=api, *args, **kwargs)
 
 def Back(**kwargs):
     Menu(None, [], clear=False, **kwargs)

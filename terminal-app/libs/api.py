@@ -80,17 +80,39 @@ class Api:
         return response
 
     # GET /teams?search=<keyword>
-    def find_team(self, keyword):
+    def find_team(self, keyword=''):
         return self.authenticated_request('GET', f'{self.host}/teams?search={keyword}')
     
     # GET /teams/<initials>
     def get_team(self, initials):
-        return self.authenticated_request('GET', f'{self.host}/users/{initials}')
+        return self.authenticated_request('GET', f'{self.host}/teams/{initials}')
+
+    # GET /users/<login>/teams
+    def user_teams(self, login):
+        return self.authenticated_request('GET', f'{self.host}/users/{login}/teams')
     
     # POST /teams
     def create_team(self, initials, name):
         payload = {'initials': initials, 'name': name}
         return self.authenticated_request('POST', f'{self.host}/teams', json=payload)
+
+    # GET /teams/<initials>/members
+    def team_members(self, initials):
+        return self.authenticated_request('GET', f'{self.host}/teams/{initials}/members')
+
+    # POST /teams/<initials>/members
+    def add_team_member(self, initials, login):
+        payload = {'login': login}
+        return self.authenticated_request('POST', f'{self.host}/teams/{initials}/members', json=payload)
+
+    # PUT /teams/<initials>
+    def update_team(self, initials, new_initials=None, new_name=None):
+        payload = dict()
+        if new_initials:
+            payload['initials'] = new_initials
+        if new_name:
+            payload['name'] = new_name
+        return self.authenticated_request('PUT', f'{self.host}/teams/{initials}', json=payload)
 
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
