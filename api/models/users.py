@@ -54,18 +54,22 @@ class UsersModel(Model):
             'street', 'number', 'complement'
         ):
             value = getattr(self, field)
-            if field == 'number' and value == None:
-                setattr(self, field, 'NAN')
+            if field == 'number' and (not value or not value.isdigit()):
+                setattr(self, field, None)
                 empty.append(field)
             elif value == None:
                 empty.append(field)
                 setattr(self, field, 'NULL')
         sql = (f'UPDATE "{self.table_name}" '
-        f"SET name = '{self.name}', email = '{self.email}', "
-        f"birthday = '{self.birthday}', password = '{self.password}', country = '{self.country}', "
-        f"state = '{self.state}', city = '{self.city}', neighborhood = '{self.neighborhood}', street = '{self.street}', "
-        f"number = '{self.number}', complement = '{self.complement}' WHERE login = '{self.login}'")
-        result = self.connector.execute_sql(sql)
+               'SET name = %s, email = %s, '
+               'birthday = %s, password = %s, country = %s, '
+               'state = %s, city = %s, neighborhood = %s, street = %s, '
+               'number = %s, complement = %s WHERE login = %s')
+        result = self.connector.execute_sql(sql, 
+            (self.name, self.email, self.birthday, self.password, self.country,
+            self.state, self.city, self.neighborhood, self.street, self.number,
+            self.complement, self.login)
+        )
         for field in empty:
             setattr(self, field, None)
 
