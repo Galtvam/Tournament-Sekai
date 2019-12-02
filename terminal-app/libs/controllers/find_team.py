@@ -31,27 +31,75 @@ def find_team(api):
             team = found_teams[0]
         elif len(found_teams) > 1:
             print(f"\nEncontramos {len(found_teams)} times com as palavras chave\n")
-            teams = [(f"{team['initials']} - {team['name']}", team) for team in found_teams]
+            teams = [(f"{team['initials']} - {team['name']}", team['initials']) for team in found_teams]
             options = teams + [('Nenhum desses', '__exit__')]
-            team = List(message="Por qual time você está procurando?", choices=options)
-            if not team:
+            initials = List(message="Por qual time você está procurando?", choices=options)
+            if not initials:
                 return
         
-        if team == '__exit__':
+        if initials == '__exit__':
             try_again = Confirm(message='Quer tentar pesquisar usando outro termo?')
 
             if not try_again:
                 break
         else:
-            print_team(team)
+            view_team(api, initials)
             Back()
             break
 
-def print_team(team):
-    # TODO: Implementar membros quando for disponibilizado pela API
+@Controller
+def my_teams(api):
     clear_screen()
+    section_title('Meus Times')
+    teams = api.user_teams(api.user['login'])
+    team_choices = [(f"{team['initials']} - {team['name']}", team['initials']) for team in teams]
+    options = team_choices + [('Voltar', '__exit__')]
+    choose = List(message='Você participa dos seguinte times', choices=options)
+    if choose != '__exit__':
+        team = [t for t in teams if t['initials'] == choose][0]
+        view_team(api, team['initials'])
+
+
+@Controller
+def change_team_initials(api, initials):
+    new_initials = Text(message='Para quais iniciais você deseja alterar?', validate=validate_required)
+    team = api.update_team(initials, new_initials=new_initials)
+    print_success('Iniciais do time alterada com sucesso')
+    Back()
+
+@Controller
+def change_team_name(api, initials):
+    new_name = Text(message='Qual o novo nome do seu time?', validate=validate_required)
+    team = api.update_team(initials, new_name=new_name)
+    print_success('Nome do time alterada com sucesso')
+    Back()
+
+@Controller
+def team_new_member(api, initials):
+    login = Text(message='Qual o login do usuário que você deseja adicionar?', validate=validate_required)
+    user = api.get_user(login)
+    api.add_team_member(initials, login)
+    print_success('Usuário adicionado como membro com sucesso')
+    Back()
+
+def view_team(api, initials):
+    def _header():
+        print_team(api, initials)
+    team = api.get_team(initials)
+    if api.user['login'] == team['owner']:
+        menu = [
+            ('Alterar iniciais do time', 'change_team_initials'),
+            ('Alterar nome do time', 'change_team_name'),
+            ('Adicionar novo membro', 'team_new_member'),
+        ]
+        Menu(api, menu, before_show=_header, initials=initials)
+
+def print_team(api, initials):
+    clear_screen()
+    team = api.get_team(initials)
     section_title(f"{team['initials']} - {team['name']}")
-    members = []
+    members = api.team_members(team['initials'])
+    members = ', '.join(m['login'] for m in members)
     team_info = (f"{bright('Criado por:')} {team['owner']}\n"
-                 f"{bright('Membros:')}")
+                 f"{bright('Membros:')} {members}\n")
     print(team_info)

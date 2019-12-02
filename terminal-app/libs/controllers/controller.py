@@ -1,4 +1,4 @@
-from ..prompt import Menu, clear_screen, print_error, print_errors
+from ..prompt import Menu, Back, clear_screen, print_error, print_errors
 
 registred_controllers = {}
 controllers_api = None
@@ -22,3 +22,4 @@ def call_controller(controller, *args, **kwargs):
         except ApiError as exception:
             errors = exception.args[0]
             print_errors(errors)
+            Back()

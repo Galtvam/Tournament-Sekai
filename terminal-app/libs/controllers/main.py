@@ -12,6 +12,7 @@ def main(api):
         ('Ver meu perfil', 'profile'),
         ('Procurar um usuário', 'find_user'),
         ('Criar um time', 'create_team'),
+        ('Ver meus times', 'my_teams'),
         ('Procurar por um time', 'find_team'),
         ('Criar um torneio', 'create_tournament'),
         ('Procurar por um torneio', 'find_tournament'),
