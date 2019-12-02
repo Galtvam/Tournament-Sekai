@@ -11,7 +11,11 @@ def find_user(api):
     clear_screen()
     section_title('Procurar usuário')
     login = Text(message='Nome de usuário')
-    user = api.get_user(login)
-    print_profile(user)
+    if login != '':
+        user = api.get_user(login)
+        print_profile(user)
+    else:
+        print_error('Você deve digitar algo no nome de usuário')
+
     Back()
 

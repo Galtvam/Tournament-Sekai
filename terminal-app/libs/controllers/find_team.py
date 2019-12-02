@@ -99,19 +99,23 @@ def view_team(api, initials):
     def _header():
         print_team(api, initials)
     team = api.get_team(initials)
+    menu =[]
     if api.user['login'] == team['owner']:
-        menu = [
+        menu += [
             ('Alterar iniciais do time', 'change_team_initials'),
             ('Alterar nome do time', 'change_team_name'),
             ('Adicionar novo membro', 'team_new_member'),
             ('Apagar o time', 'delete_team'),
         ]
-        try:
-            Menu(api, menu, before_show=_header, initials=initials)
-        except BadRequest as exception:
-            errors = exception.args[0]
-            if errors[0]['code'] != 15:
-                raise exception
+    menu += [
+    
+        ]
+    try:
+        Menu(api, menu, before_show=_header, initials=initials)
+    except BadRequest as exception:
+        errors = exception.args[0]
+        if errors[0]['code'] != 15:
+            raise exception
 
 def print_team(api, initials):
     clear_screen()
