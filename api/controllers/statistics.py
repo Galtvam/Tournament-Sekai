@@ -5,7 +5,7 @@ from models import StatisticsModel
 
 class StatisticsController(Controller):
 
-    @Controller.route('/statistics/periodic-tournament-partcipant', methods=['POST'])
+    @Controller.route('/statistics/periodic-tournament-partcipant', methods=['GET'])
     @Controller.json_request
     def get_periodic_tournament_participant():
         data = request.get_json()
@@ -13,51 +13,51 @@ class StatisticsController(Controller):
         return Controller.format_response(result, status_code=200)
 
     
-    @Controller.route('/statistics/most-diferent-team-participation', methods=['POST'])
+    @Controller.route('/statistics/most-diferent-team-participation', methods=['GET'])
     def get_most_diferent_team_participation():
         result = StatisticsModel.most_diferent_team_participation()
         return Controller.format_response(result, status_code=200)
     
 
-    @Controller.route('/statistics/biggest-winners', methods=['POST'])
+    @Controller.route('/statistics/biggest-winners', methods=['GET'])
     def get_biggest_winners():
         result = StatisticsModel.biggest_winners()
         return Controller.format_response(result, status_code=200)
 
     
-    @Controller.route('/statistics/biggest-winners-teams', methods=['POST'])
+    @Controller.route('/statistics/biggest-winners-teams', methods=['GET'])
     def get_biggest_winners_teams():
         result = StatisticsModel.biggest_winners_teams()
         return Controller.format_response(result, status_code=200)
     
 
-    @Controller.route('/statistics/biggest-match-winners', methods=['POST'])
+    @Controller.route('/statistics/biggest-match-winners', methods=['GET'])
     def get_biggest_match_winners():
         result = StatisticsModel.biggest_match_winners()
         return Controller.format_response(result, status_code=200)
     
 
-    @Controller.route('/statistics/biggest-match-winners-teams', methods=['POST'])
+    @Controller.route('/statistics/biggest-match-winners-teams', methods=['GET'])
     def get_biggest_match_winners_teams():
         result = StatisticsModel.biggest_match_winners_teams()
         return Controller.format_response(result, status_code=200)
     
 
-    @Controller.route('/statistics/participants-one-attribute', methods=['POST'])
+    @Controller.route('/statistics/participants-one-attribute', methods=['GET'])
     def get_participants_information_one_attribute():
         data = request.get_json()
         result = StatisticsModel.participants_information_one_attribute(data['attribute'], data['cod_tournament'])
         return Controller.format_response(result, status_code=200)
     
     
-    @Controller.route('/statistics/best-participants-one-attribute', methods=['POST'])
+    @Controller.route('/statistics/best-participants-one-attribute', methods=['GET'])
     def get_best_participants_information_one_attribute():
         data = request.get_json()
         result = StatisticsModel.best_participants_information_one_attribute(data['attribute'], data['cod_tournament'])
         return Controller.format_response(result, status_code=200)
     
 
-    @Controller.route('/statistics/worst-participants-one-attribute', methods=['POST'])
+    @Controller.route('/statistics/worst-participants-one-attribute', methods=['GET'])
     def get_worst_participants_information_one_attribute():
         data = request.get_json()
         result = StatisticsModel.worst_participants_information_one_attribute(data['attribute'], data['cod_tournament'])
