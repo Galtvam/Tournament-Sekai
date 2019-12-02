@@ -77,7 +77,11 @@ class Controller:
 	
 	@staticmethod
 	def authenticated_user():
-		return UsersModel.find_by_login(get_jwt_identity())[0]
+		logged_user = UsersModel.find_by_login(get_jwt_identity())
+		if not logged_user:
+			return Controller.format_response(errors=22, status_code=401)
+
+		return logged_user[0]
 
 	@staticmethod
 	def unauthorized_response(callback):

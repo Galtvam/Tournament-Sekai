@@ -30,8 +30,8 @@ class MatchsModel(Model):
     def find_by_id_match(id_match, cod_tournament):
         result = MatchsModel.connector.execute_sql(
             f'SELECT * FROM {MatchsModel.table_name} '
-            "WHERE " + MatchsModel.col_id_match +"='%s' and "+ col_cod_tournament" ='%s'",
-            (id_match,)
+            f"WHERE {MatchsModel.col_id_match}=" '%s' f" AND {col_cod_tournament}=" '%s',
+            (id_match, cod_tournament)
         )
         return MatchsModel.instantiate_rows(result)
     

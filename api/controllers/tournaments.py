@@ -109,7 +109,10 @@ class TournamentsController(Controller):
             return Controller.format_response(errors=21, status_code=404)
         tournament = tournament[0]
         teams = tournament.tournament_teams()
-        return Controller.format_response(teams, status_code=200)
+        result = []
+        for team in teams:
+            result.append(team.to_dict())
+        return Controller.format_response(result, status_code=200)
 
     @Controller.route('/tournaments/<cod_tournament>/moderators')
     @Controller.authenticate_user
@@ -159,9 +162,8 @@ class TournamentsController(Controller):
         if tournament and team:
             team = team[0]
             tournament = tournament[0]
-            moderator = ModerationsModel.find_moderation(current_user.login, cod_tournament)
-            #Verifica se o usuário atual é moderador ou dono do torneio
-            if moderator or current_user.login == tournament.owner_login:
+            # Verifica se o usuário é dono do time
+            if current_user.login == team.owner_login:
                 members = team.view_members_in_team()
                 for member in members:
                     try:
@@ -172,7 +174,7 @@ class TournamentsController(Controller):
                 return Controller.format_response(teams, status_code=201)
             
             else:
-                return Controller.format_response(errors=13, status_code=404)
+                return Controller.format_response(errors=13, status_code=403)
 
         else:
             return Controller.format_response(errors=18, status_code=404)
@@ -202,9 +204,8 @@ class TournamentsController(Controller):
         if tournament and team:
             team = team[0]
             tournament = tournament[0]
-            moderator = ModerationsModel.find_moderation(current_user.login, cod_tournament)
-            #Verifica se o usuário atual é moderador ou dono do torneio
-            if moderator or current_user.login == tournament.owner_login:
+            # Verifica se o usuário é dono do time
+            if current_user.login == team.owner_login:
                 members = tournament.view_members_in_tournament(initials) #Pega os membros do time no torneio
                 if members:
                     for member in members:

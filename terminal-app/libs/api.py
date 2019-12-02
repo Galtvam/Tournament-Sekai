@@ -126,6 +126,10 @@ class Api:
     def find_tournaments(self, name):
         return self.authenticated_request('GET', f'{self.host}/tournaments?name={name}')
 
+    # GET /tournaments
+    def all_tournaments(self):
+        return self.authenticated_request('GET', f'{self.host}/tournaments')
+
     # GET /tournaments/<cod>
     def get_tournament(self, cod):
         return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}')
@@ -147,9 +151,14 @@ class Api:
         return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}/teams')
 
     # POST /tournaments/<cod_tournament>/teams
-    def add_team_to_tournament(self, cod, payload):
-        return self.authenticated_request('POST', f'{self.host}/tournaments/{cod}', json=payload)
+    def add_team_to_tournament(self, cod, initials):
+        payload = {'initials': initials}
+        return self.authenticated_request('POST', f'{self.host}/tournaments/{cod}/teams', json=payload)
     
+    # GET /users/<login>/tournaments
+    def user_tournaments(self, login):
+        return self.authenticated_request('GET', f'{self.host}/users/{login}/tournaments')
+
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
         headers.update({'Authorization': f'Bearer {self.auth_token}'})

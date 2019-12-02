@@ -20,7 +20,8 @@ class ErrorCodes:
         18: 'Time ou Torneio não encontrado',
         19: 'Time já registrado',
         20: 'Esse time não está registrado no Torneio',
-        21: 'Torneio não encontrado'
+        21: 'Torneio não encontrado',
+        22: 'Token inválido' 
     }
 
     @staticmethod

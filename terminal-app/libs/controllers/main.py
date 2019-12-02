@@ -16,6 +16,7 @@ def main(api):
         ('Procurar por um time', 'find_team'),
         ('Criar um torneio', 'create_tournament'),
         ('Procurar por um torneio', 'find_tournament'),
+        ('Ver meus torneios', 'my_tournaments'),
         ('Ranking', 'ranking'),
         ('Deslogar', 'logout')
     ]

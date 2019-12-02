@@ -5,8 +5,8 @@ from ..api import ApiError
 @Controller
 def login(api):
     while True:
-        username = 'xeldu'#Text(message='Digite seu login')
-        password = '12345678'#Password(message='Digite sua senha')
+        username = Text(message='Digite seu login')
+        password = Password(message='Digite sua senha')
 
         try:
             api.login(username, password)

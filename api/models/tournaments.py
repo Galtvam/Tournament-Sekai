@@ -87,9 +87,32 @@ class TournamentsModel(Model):
         return result
     
     def tournament_teams(self):
+        from . import TeamsModel
         sql = (f"SELECT DISTINCT initials FROM integrate WHERE cod_tournament={self.cod_tournament}")
         result = self.connector.execute_sql(sql)
-        return [r['initials'] for r in result]
+        team_initials = [r['initials'] for r in result]
+        final_result = []
+        for initials in team_initials:
+            team = TeamsModel.find_by_initials(initials)[0]
+            final_result.append(team) 
+        return final_result
+    
+    @staticmethod
+    def user_tournaments(login):
+        sql = (f"SELECT DISTINCT cod_tournament FROM integrate WHERE participant_login=" '%s')
+        result = TournamentsModel.connector.execute_sql(sql, (login,))
+        tournaments = [r['cod_tournament'] for r in result]
+        sql = (f"SELECT DISTINCT cod_tournament FROM tournament WHERE owner_login=" '%s')
+        result = TournamentsModel.connector.execute_sql(sql, (login,))
+        tournaments += [r['cod_tournament'] for r in result]
+        final_result = []
+        for cod in tournaments:
+            tournament = TournamentsModel.find_by_cod_tournament(cod)
+            if tournament:
+                final_result.append(tournament[0])
+        return final_result
+            
+
 
     @staticmethod
     def delete_member_to_tournament(login, initials, cod_tournament):

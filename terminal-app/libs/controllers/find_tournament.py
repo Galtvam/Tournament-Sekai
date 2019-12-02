@@ -1,7 +1,9 @@
 from . import Controller
 from ..prompt import *
 from ..api import BadRequest
+from .find_team import view_team
 from ..validations import validate_required, validate_start_date, validate_end_date
+
 
 from datetime import datetime
 
@@ -12,18 +14,19 @@ def find_tournament(api):
         clear_screen()
         section_title('Procurar por um Torneio')
         
-        search_tournament = Text(message='Nome do torneio', validate=validate_required)
+        search_tournament = Text(message='Pesquise por um nome (deixe para ver todos)')
         if not search_tournament:
-            return
-        
-        found_tournaments = api.find_tournaments(search_tournament)
+            found_tournaments = api.all_tournaments()
+        else:
+            found_tournaments = api.find_tournaments(search_tournament)
         
         if len(found_tournaments) == 0:
+            print_error('Nenhum torneio encontrado')
             tournament = '__exit__'
         elif len(found_tournaments) == 1:
             tournament = found_tournaments[0]['cod_tournament']
         elif len(found_tournaments) > 1:
-            print(f"\nEncontramos {len(found_tournaments)} times com as palavras chave\n")
+            print(f"\nEncontramos {len(found_tournaments)} torneios\n")
             tournaments = [(f"{t['name']}", t['cod_tournament']) for t in found_tournaments]
             options = tournaments + [('Nenhum desses', '__exit__')]
             tournament = List(message="Por qual torneio você está procurando?", choices=options)
@@ -39,6 +42,26 @@ def find_tournament(api):
             view_tournament(api, tournament)
             break
 
+@Controller
+def my_tournaments(api):
+    clear_screen()
+    section_title('Ver meus torneios')
+    tournaments = api.user_tournaments(api.user['login'])
+    tournament_choices = []
+    for tournament in tournaments:
+        owner_text = ' (Dono)' if tournament['owner'] == api.user['login'] else ''
+        option = (f"{tournament['name']}{owner_text}", tournament['cod_tournament'])
+        tournament_choices.append(option)
+    if not tournaments:
+        print_error('Você ainda não participa/criou um torneio\n')
+    options = tournament_choices + [('Voltar', '__exit__')]
+    choose = List(message='Você participa dos seguinte times', choices=options)
+    if choose != '__exit__':
+        tournament = [t for t in tournaments if t['cod_tournament'] == choose]
+        if tournament:
+            tournament = tournament[0]
+            view_tournament(api, tournament['cod_tournament'])
+
 
 def view_tournament(api, cod):
     def _header():
@@ -50,8 +73,12 @@ def view_tournament(api, cod):
             ('Atualizar informações do torneio', 'update_tournament'),
             ('Deletar o torneio', 'delete_tournament')
         ]
-    menu += [('Ver times do torneio', 'tournament_teams'),
-
+    else:
+        menu += [
+            ('Inscrever-se para o torneio', 'subscribe_tournament')
+        ]
+    menu += [
+        ('Ver times do torneio', 'tournament_teams'),
     ]
     try:
         Menu(api, menu, before_show=_header, cod=cod)
@@ -59,6 +86,29 @@ def view_tournament(api, cod):
         errors = exception.args[0]
         if errors[0]['code'] != 21:
             raise exception
+
+@Controller
+def subscribe_tournament(api, cod):
+    teams = api.user_teams(api.user['login'])
+
+    # Filterar somente os que o usuário é dono
+    teams = [t for t in teams if t['owner'] == api.user['login']]
+    if not teams:
+        print_error('Você ainda não participa de nenhum time')
+        Back()
+        return
+
+    team_choices = [(f"{t['initials']} - {t['name']}", t['initials']) for t in teams]
+    options = team_choices + [('Voltar', '__exit__')]
+    choose = List(message='Qual time você quer inscrever para o torneio', choices=options)
+    if choose != '__exit__':
+        team = [t for t in teams if t['initials'] == choose]
+        if team:
+            team = team[0]
+            api.add_team_to_tournament(cod, team['initials'])
+            print_success('Inscrito com sucesso')
+            Back()
+
 
 @Controller   
 def update_tournament(api, cod):
@@ -100,7 +150,7 @@ def tournament_teams(api, cod):
         print_error('Este torneio não possui times registrados ainda')
 
     options = team_choices + [('Voltar', '__exit__')]
-    choose = List(message='', choices=options)
+    choose = List(message='Selecione um time para visualizar', choices=options)
     if choose != '__exit__':
         team = [t for t in teams if t['initials'] == choose]
         if team:

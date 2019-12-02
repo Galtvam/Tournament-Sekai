@@ -39,8 +39,8 @@ class TeamsModel(Model):
     @staticmethod
     def user_teams(login):
         result = TeamsModel.connector.execute_sql(
-            'SELECT DISTINCT * FROM team_member t ' 
-            f'RIGHT JOIN {TeamsModel.table_name} m ON t.initials = m.initials ' 
+            'SELECT DISTINCT t.* FROM team_member m ' 
+            f'RIGHT JOIN {TeamsModel.table_name} t ON t.initials = m.initials ' 
             'WHERE LOWER("participant_login")=LOWER(%s) OR LOWER("owner_login")=LOWER(%s)',
             (login, login)
         )
