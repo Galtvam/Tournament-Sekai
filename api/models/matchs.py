@@ -7,7 +7,7 @@ class MatchsModel(Model):
     col_winner = 'winner'
     col_cod_tournament = 'cod_tournament'
 
-    def __init__(self, id_match, date, cod_tournament, winner=None):
+    def __init__(self, date, cod_tournament,id_match=0, winner=None):
 
         self.id_match = id_match
         self.date = date

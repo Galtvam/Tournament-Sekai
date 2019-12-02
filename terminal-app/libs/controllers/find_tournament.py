@@ -1,7 +1,7 @@
 from . import Controller
 from ..prompt import *
 from ..api import BadRequest
-from ..validations import validate_required
+from ..validations import validate_required, validate_start_date, validate_end_date
 
 from datetime import datetime
 
@@ -25,7 +25,7 @@ def find_tournament(api):
         elif len(found_tournaments) > 1:
             print(f"\nEncontramos {len(found_tournaments)} times com as palavras chave\n")
             tournaments = [(f"{t['name']}", t['cod_tournament']) for t in found_tournaments]
-            options = teams + [('Nenhum desses', '__exit__')]
+            options = tournaments + [('Nenhum desses', '__exit__')]
             tournament = List(message="Por qual torneio você está procurando?", choices=options)
             if not tournament:
                 return
@@ -37,7 +37,6 @@ def find_tournament(api):
                 break
         else:
             view_tournament(api, tournament)
-            Back()
             break
 
 
@@ -45,15 +44,56 @@ def view_tournament(api, cod):
     def _header():
         print_tournament(api, cod)
     tournament = api.get_tournament(cod)
+    menu = []
     if api.user['login'] == tournament['owner']:
-        menu = [
-            ('Atualizar informações do torneio', 'update_tournament'),
-        ]
-    else:
         menu += [
-
+            ('Atualizar informações do torneio', 'update_tournament'),
+            ('Deletar o torneio', 'delete_tournament')
         ]
-    Menu(api, menu, before_show=_header, cod=cod)
+    menu += [
+
+    ]
+    try:
+        Menu(api, menu, before_show=_header, cod=cod)
+    except BadRequest as exception:
+        errors = exception.args[0]
+        if errors[0]['code'] != 21:
+            raise exception
+
+@Controller   
+def update_tournament(api, cod):
+    clear_screen()
+    section_title('Atualizar Torneio')
+    tournament = api.get_tournament(cod)
+    print_tournament(api, cod)
+
+    new_name = Text(message='Para qual nome você deseja alterar?', validate=validate_required, default=tournament['name'])
+
+    new_description = Text(message='Qual a nova descrição que você deseja inserir?', validate=validate_required, default=tournament['description'])
+
+    new_start_date = Text(message='Data de início (dd/mm/YYYY)', validate=validate_start_date, default=tournament['start_date'])
+
+    new_end_date = Text(message='Data de encerramento (dd/mm/YYYY)', 
+                    validate=validate_end_date(new_start_date), default=tournament['end_date'])
+
+
+    json_dict = {'name': new_name, 'description': new_description, 'start_date': new_start_date, 'end_date': new_start_date}
+    tournament = api.update_tournament(cod, json_dict)
+    print_success('Informações do Torneio alteradas com sucesso')
+    Back()
+
+@Controller   
+def delete_tournament(api, cod):
+    confirm = Confirm(message='Você tem certeza que quer deletar o Torneio?')
+    if confirm:
+        api.delete_tournament(cod)
+        print_success('Torneio removido com sucesso')
+        Back()
+
+@Controller   
+def tournament_teams(api, cod):
+    pass
+
 
 
 def print_tournament(api, cod):
