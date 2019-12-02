@@ -50,7 +50,7 @@ def view_tournament(api, cod):
             ('Atualizar informações do torneio', 'update_tournament'),
             ('Deletar o torneio', 'delete_tournament')
         ]
-    menu += [
+    menu += [('Ver times do torneio', 'tournament_teams'),
 
     ]
     try:
@@ -92,7 +92,21 @@ def delete_tournament(api, cod):
 
 @Controller   
 def tournament_teams(api, cod):
-    pass
+    clear_screen()
+    section_title('Times do Torneio ')
+    teams = api.tournament_teams(cod)
+    team_choices = [(f"{team['initials']} - {team['name']}", team['initials']) for team in teams]
+    if not teams:
+        print_error('Este torneio não possui times registrados ainda')
+
+    options = team_choices + [('Voltar', '__exit__')]
+    choose = List(message='', choices=options)
+    if choose != '__exit__':
+        team = [t for t in teams if t['initials'] == choose]
+        if team:
+            team = team[0]
+            view_team(api, team['initials'])
+
 
 
 

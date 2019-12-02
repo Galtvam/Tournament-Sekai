@@ -143,15 +143,12 @@ class Api:
         return self.authenticated_request('DELETE', f'{self.host}/tournaments/{cod}')
 
     # GET /tournaments/<cod_tournament>/teams
-    def tournament_teams(cod):
-        return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}/teans')
-
+    def tournament_teams(self, cod):
+        return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}/teams')
 
     # POST /tournaments/<cod_tournament>/teams
     def add_team_to_tournament(self, cod, payload):
         return self.authenticated_request('POST', f'{self.host}/tournaments/{cod}', json=payload)
-
-
     
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
