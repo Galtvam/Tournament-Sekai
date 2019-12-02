@@ -13,7 +13,7 @@ def signup(api):
 
         register_data = {
             'name': Text(message='Qual seu nome', validate=validate_name),
-            'birthday': Text(message='Quando você nasceu (dd/mm/YYYY)', validate=validate_birthday),
+            'birthday': Text(message='Quando você nasceu (dd/mm/YYYY)', validate=validate_date),
             'username': Text(message='Digite um nome de usuário', validate=validate_required),
             'email': Text(message='Digite um e-mail', validate=validate_email)
         }

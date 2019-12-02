@@ -11,7 +11,7 @@ from datetime import datetime
 def find_team(api):
     while True:
         clear_screen()
-        section_title('Procurar por um time')
+        section_title('Procurar por um Time')
         
         search_team = Text(message='Quais as iniciais ou o nome do time?', validate=validate_required)
         if not search_team:
