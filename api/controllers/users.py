@@ -25,7 +25,7 @@ class UsersController(Controller):
 				'name', 'email', 'birthday', 'password',
 		        'country', 'state', 'city',
 		        'neighborhood', 'street',
-		        'number', 'complement'
+		        'number', 'complement', 'phone'
 			):
 				if field in data:
 					setattr(logged_user, field, data[field])

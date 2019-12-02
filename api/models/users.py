@@ -18,6 +18,9 @@ class UsersModel(Model):
     col_number = 'number'
     col_complement = 'complement'
 
+    table_phone_name = 'phone'
+    col_phone = 'phone.phone'
+
     def __init__(
         self, login, name, email, birthday, password,
         country=None, state=None, city=None,
@@ -36,6 +39,7 @@ class UsersModel(Model):
         self.street = street
         self.number = number
         self.complement = complement
+        self.phone = self._get_phones()
 
 
     def insert(self):
@@ -51,7 +55,7 @@ class UsersModel(Model):
         empty = []
         for field in (
             'country', 'state', 'city', 'neighborhood',
-            'street', 'number', 'complement'
+            'street', 'number', 'complement', 'phone'
         ):
             value = getattr(self, field)
             if field == 'number' and (not value or not value.isdigit()):
@@ -70,8 +74,29 @@ class UsersModel(Model):
             self.state, self.city, self.neighborhood, self.street, self.number,
             self.complement, self.login)
         )
+
+        if len(self.phone) != 0:
+            sql_delete = (
+                f'DELETE FROM {self.table_phone_name} '
+                "WHERE login = '%s'" % self.login
+            )
+            sql_phone = (
+                    f'INSERT INTO "{self.table_phone_name}" '
+                    'VALUES (%s, %s)'
+                )
+
+            phone_delete_result = self.connector.execute_sql(
+                sql_delete
+            )
+
+            for num_phone in self.phone:
+                phone_insert_result = self.connector.execute_sql(
+                    sql_phone, (num_phone, self.login)
+                )
+
         for field in empty:
             setattr(self, field, None)
+
 
     def to_dict(self):
         return {
@@ -79,7 +104,8 @@ class UsersModel(Model):
                 'email': self.email, 'birthday': self.birthday.strftime('%d/%m/%Y'),
                 'street': self.street, 'number': self.number, 'complement': self.complement,
                 'neighborhood': self.neighborhood, 'city': self.city,
-                'state': self.state, 'country': self.country
+                'state': self.state, 'country': self.country, 
+                'phone': self.phone
                 }
 
     def find_by_login(login):
@@ -97,6 +123,17 @@ class UsersModel(Model):
             f'SELECT * FROM {UsersModel.table_name};'
         )
         return UsersModel.instantiate_rows(result)
+    
+    def _get_phones(self):
+        sql = (f'SELECT * FROM "{UsersModel.table_phone_name}" '
+            'WHERE phone.login = %s'
+        )
+        result = UsersModel.connector.execute_sql(sql, (self.login,))
+        phone_list = []
+
+        for number in result:
+            phone_list.append(number['phone'])
+        return phone_list
 
 
     class Validation:
