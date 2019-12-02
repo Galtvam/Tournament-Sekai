@@ -20,7 +20,7 @@ class StatisticsModel(Model):
         result = StatisticsModel.connector.execute_sql(
             sql, (start_date, end_date,)
         )
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -30,7 +30,7 @@ class StatisticsModel(Model):
             'GROUP BY "participant_login"'
         )
         result = StatisticsModel.connector.execute_sql(sql)
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -43,7 +43,7 @@ class StatisticsModel(Model):
             'ORDER BY COUNT(t.winner) DESC'
         )
         result = StatisticsModel.connector.execute_sql(sql)
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -55,7 +55,7 @@ class StatisticsModel(Model):
             'ORDER BY COUNT(tor.winner) DESC'
         )
         result = StatisticsModel.connector.execute_sql(sql)
-        return StatisticsModel._best_player_list(result)
+        return result
 
     #esse
     @staticmethod
@@ -69,7 +69,7 @@ class StatisticsModel(Model):
             'ORDER BY COUNT(i.participant_login) DESC'
         )
         result = StatisticsModel.connector.execute_sql(sql)
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -81,7 +81,7 @@ class StatisticsModel(Model):
             'ORDER BY COUNT(ma.winner) DESC '
         )
         result = StatisticsModel.connector.execute_sql(sql)
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -95,7 +95,7 @@ class StatisticsModel(Model):
         result = StatisticsModel.connector.execute_sql(
             sql, (cod_tournament, id_attribute,)
         )
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -109,7 +109,7 @@ class StatisticsModel(Model):
         result = StatisticsModel.connector.execute_sql(
             sql, (cod_tournament, id_attribute,)
         )
-        return StatisticsModel._best_player_list(result)
+        return result
     
     #esse
     @staticmethod
@@ -123,13 +123,4 @@ class StatisticsModel(Model):
         result = StatisticsModel.connector.execute_sql(
             sql, (cod_tournament, id_attribute,)
         )
-        return StatisticsModel._best_player_list(result)
-
-
-
-    # Ajustes de retorno
-    def _best_player_list(result):
-        participants = []
-        for login in result:
-            participants.append(login['login'])
-        return participants
+        return result
