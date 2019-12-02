@@ -76,10 +76,15 @@ class TournamentsModel(Model):
         Adiciona membro ao time naquele torneio
         '''
         sql = (f"INSERT INTO integrate VALUES ( '{login}', '{initials}', '{cod_tournament}')")
-        self.connector.execute_sql(sql)
+        TournamentsModel.connector.execute_sql(sql)
         
     def view_members_in_tournament(self, initials):
         sql = (f"SELECT participant_login FROM integrate WHERE cod_tournament = {self.cod_tournament} and "
         f"initials = '{initials}'")
         result = self.connector.execute_sql(sql)
         return result
+
+    @staticmethod
+    def delete_member_to_tournament(login, initials, cod_tournament):
+        sql = (f"DELETE FROM integrate WHERE participant_login = '{login}' and initials = '{initials}'and cod_tournament = {cod_tournament}")
+        TournamentsModel.connector.execute_sql(sql)                
