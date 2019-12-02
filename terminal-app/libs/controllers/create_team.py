@@ -11,7 +11,7 @@ from datetime import datetime
 @Controller
 def create_team(api):
     clear_screen()
-    section_title('Criar um time')
+    section_title('Criar um Time')
     
     team_data = {
         'initials': Text(message='Qual será as inicias do seu time?', validate=validate_required),

@@ -25,12 +25,32 @@ def validate_name(answers, current):
         raise ValidationError('', reason='Nome só pode conter letras')
     return True
 
-def validate_birthday(answers, current):
+def validate_date(answers, current):
     try:
         datetime.strptime(current, '%d/%m/%Y')
     except:
         raise ValidationError('', reason='Data inválida, o formato deve ser "dd/mm/YYYY"')
     return True
+
+def validate_start_date(answers, current):
+    validate_date(answers, current)
+    start_date = datetime.strptime(current, '%d/%m/%Y')
+    if start_date < datetime.now():
+        raise ValidationError('', reason='A data não pode ser no passado')
+    return True
+
+def validate_end_date(start_date):
+    if not start_date:
+        start_date = datetime.strptime(start_date, '%d/%m/%Y')
+    else:
+        return lambda answers, current: True 
+    def validation(answers, current):
+        validate_date(answers, current)
+        end_date = datetime.strptime(current, '%d/%m/%Y')
+        if end_date < start_date:
+            raise ValidationError('', reason='O encerramento deve ser depois da data de início')
+        return True
+    return validation
 
 def validate_is_digit(answers, current):
     if not current.isdigit():

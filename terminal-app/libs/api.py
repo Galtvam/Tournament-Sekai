@@ -103,7 +103,7 @@ class Api:
     # GET /teams/<initials>/members
     def team_members(self, initials):
         return self.authenticated_request('GET', f'{self.host}/teams/{initials}/members')
-
+    
     # POST /teams/<initials>/members
     def add_team_member(self, initials, login):
         payload = {'login': login}
@@ -117,6 +117,22 @@ class Api:
         if new_name:
             payload['name'] = new_name
         return self.authenticated_request('PUT', f'{self.host}/teams/{initials}', json=payload)
+
+    # POST /tournaments
+    def create_tournament(self, payload):
+        return self.authenticated_request('POST', f'{self.host}/tournaments', json=payload)
+
+    # GET /tournaments?name=<name>
+    def find_tournaments(self, name):
+        return self.authenticated_request('GET', f'{self.host}/tournaments?name={name}')
+
+    # GET /tournaments/<cod>
+    def get_tournament(self, cod):
+        return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}')
+    
+    # GET /tournaments/<cod>/teams
+    def get_tournament_teams(self, cod):
+        return self.authenticated_request('GET', f'{self.host}/tournaments/{cod}/teams')
 
     def authenticated_request(self, method, url, *args, **kwargs):
         headers = kwargs.get('headers', {})
