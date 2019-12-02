@@ -11,7 +11,7 @@ class TournamentsModel(Model):
 
     def __init__(self, name, description, start_date, end_date, owner_login, cod_tournament=None):
 
-        self.cod_tournament  = int(cod_tournament)
+        self.cod_tournament = int(cod_tournament) if cod_tournament is not None else cod_tournament
         self.name = name
         self.description = description
         self.start_date = start_date
@@ -26,10 +26,12 @@ class TournamentsModel(Model):
         self.cod_tournament = result[0]['cod_tournament']
     
     def to_dict(self):
-        return {'cod_tournament': self.cod_tournament, 'name': self.name,
-        'description': self.description, 'start_date': self.start_date.strftime('%d/%m/%Y'),
-         'end_date': self.end_date.strftime('%d/%m/%Y'),
-        'owner_login': self.owner_login}
+        return {
+            'cod_tournament': self.cod_tournament, 'name': self.name,
+            'description': self.description, 'start_date': self.start_date.strftime('%d/%m/%Y'),
+            'end_date': self.end_date.strftime('%d/%m/%Y'),
+            'owner': self.owner_login
+        }
 
     @staticmethod
     def find_by_cod_tournament(cod_tournament):

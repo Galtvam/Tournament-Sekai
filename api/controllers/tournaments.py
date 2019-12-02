@@ -8,9 +8,8 @@ from models import ModerationsModel
 class TournamentsController(Controller):
 
 
-    #/tournaments?code=&name=
     @Controller.route('/tournaments')
-    def get():
+    def get_all():
         code = request.args.get('code')
         name = request.args.get('name')
         limit = request.args.get('limit','20')
@@ -30,6 +29,13 @@ class TournamentsController(Controller):
             result.append(tournament.to_dict())
         return Controller.format_response(result, status_code=200)
     
+    @Controller.route('/tournaments/<cod_tournament>')
+    def get(cod_tournament):
+        tournaments = TournamentsModel.find_by_cod_tournament(int(cod_tournament))
+        if not tournaments:
+            Controller.format_response(errors=21, status_code=200)
+        return Controller.format_response(tournaments[0].to_dict(), status_code=200)
+
     @Controller.route('/tournaments', methods=['POST'])
     @Controller.authenticate_user
     def create():
@@ -39,7 +45,7 @@ class TournamentsController(Controller):
         data['start_date'], data['end_date'], current_user.login)
 
         tournament.insert()
-        return Controller.format_response(status_code=201)
+        return Controller.format_response(tournament, status_code=201)
 
     @Controller.route('/tournaments/<code>', methods=['PUT'])
     @Controller.authenticate_user
@@ -58,7 +64,7 @@ class TournamentsController(Controller):
                     setattr(tournament, field, data[field])
 
             tournament.update_by_code()
-            return Controller.format_response(status_code=200)
+            return Controller.format_response(tournament, status_code=200)
         
         else:
             return Controller.format_response(status_code=404)
@@ -112,7 +118,7 @@ class TournamentsController(Controller):
                         tournament.add_member_to_tournament(member['participant_login'], initials, cod_tournament)
                     except:
                         return Controller.format_response(errors=19 ,status_code=404)
-                return Controller.format_response(status_code=200)
+                return Controller.format_response(status_code=201)
             
             else:
                 return Controller.format_response(errors=13, status_code=404)

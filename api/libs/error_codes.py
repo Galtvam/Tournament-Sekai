@@ -19,8 +19,9 @@ class ErrorCodes:
         17: 'Esse usuário já está no time ou não existe',
         18: 'Time ou Torneio não encontrado',
         19: 'Time já registrado',
-        20: 'Esse time não está registrado no Torneio'
-            }   
+        20: 'Esse time não está registrado no Torneio',
+        21: 'Torneio não encontrado'
+    }
 
     @staticmethod
     def get_error_message(error_code, args):

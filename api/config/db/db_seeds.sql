@@ -19,12 +19,12 @@ INSERT INTO "team" VALUES ('SDS','Shinigamis do Sertão','ichigozinho');
 
 --Torneios
 
-INSERT INTO "tournament" VALUES (1,'Melhor Torneio de YuGiOh','Melhor torneio de YuGiOh da sua rua, vai ser muito top vey','10/10/2019','11/10/2019','gokuzinho','UA');
-INSERT INTO "tournament" VALUES (2,'Melhor Torneio de Robblox','O torneio que as crianças vão amar, um jogo que ninguem gosta, só tiram onda por que é um lixo','05/11/2019','07/11/2019','gintokizinho','UA');
-INSERT INTO "tournament" VALUES (3,'Torneio Galático','Torneio de batalha entre deuses e grandes guerreiros de todas as galáxias','11/22/2019','11/26/2019','gokuzinho','CDZ');
-INSERT INTO "tournament" VALUES (4,'Exame Hunter','Torneio para saber quais serão os próximos seres qualificados para possui a licença Hunter','05/11/2019','10/11/2019','gonzinho','UA');
-INSERT INTO "tournament" VALUES (5,'Torneio de Counter Strike','Torneio que reune os melhores times do cenário brasileiro de cs-go, com premiação de incriveis 3 reais','12/17/2019','12/22/2019','natsuzinho');
-INSERT INTO "tournament" VALUES (6,'Torneio de Espadas','Torneio que reune todos os espadachins dos mundos, da sociedade das almas, para saber quem é o mais forte','07/02/2020','03/13/2020','ichigozinho');
+INSERT INTO "tournament" VALUES (DEFAULT, 'Melhor Torneio de YuGiOh','Melhor torneio de YuGiOh da sua rua, vai ser muito top vey','10/10/2019','11/10/2019','gokuzinho','UA');
+INSERT INTO "tournament" VALUES (DEFAULT, 'Melhor Torneio de Robblox','O torneio que as crianças vão amar, um jogo que ninguem gosta, só tiram onda por que é um lixo','05/11/2019','07/11/2019','gintokizinho','UA');
+INSERT INTO "tournament" VALUES (DEFAULT, 'Torneio Galático','Torneio de batalha entre deuses e grandes guerreiros de todas as galáxias','11/22/2019','11/26/2019','gokuzinho','CDZ');
+INSERT INTO "tournament" VALUES (DEFAULT, 'Exame Hunter','Torneio para saber quais serão os próximos seres qualificados para possui a licença Hunter','05/11/2019','10/11/2019','gonzinho','UA');
+INSERT INTO "tournament" VALUES (DEFAULT, 'Torneio de Counter Strike','Torneio que reune os melhores times do cenário brasileiro de cs-go, com premiação de incriveis 3 reais','12/17/2019','12/22/2019','natsuzinho');
+INSERT INTO "tournament" VALUES (DEFAULT, 'Torneio de Espadas','Torneio que reune todos os espadachins dos mundos, da sociedade das almas, para saber quem é o mais forte','07/02/2020','03/13/2020','ichigozinho');
 
 
 
