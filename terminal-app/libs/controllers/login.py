@@ -5,19 +5,9 @@ from ..api import ApiError
 @Controller
 def login(api):
     while True:
-<<<<<<< HEAD
         username = Text(message='Digite seu login')
         password = Password(message='Digite sua senha')
 
-=======
-        clear_screen()
-        section_title('Login')
-        # TODO: Remover usuário padrão conlcuir o desenvovlimento
-        # username = Text(message='Digite seu login')
-        # password = Password(message='Digite sua senha')
-        username = 'Igorxp5'
-        password = '12345678'
->>>>>>> [TerminalApp] Biblioteca para desenhar Chaves de Torneio
         try:
             api.login(username, password)
         except ApiError as exception:
