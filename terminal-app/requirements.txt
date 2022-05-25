@@ -4,7 +4,7 @@ chardet==3.0.4
 colorama==0.4.1
 idna==2.8
 inquirer==2.6.3
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-editor==1.0.4
 readchar==2.0.1
 requests==2.22.0
