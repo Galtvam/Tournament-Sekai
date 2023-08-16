@@ -1,5 +1,5 @@
 blessings==1.7
-certifi==2019.9.11
+certifi==2023.7.22
 chardet==3.0.4
 colorama==0.4.1
 idna==2.8
